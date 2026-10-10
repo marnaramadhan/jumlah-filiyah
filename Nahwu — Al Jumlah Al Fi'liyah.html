@@ -1,0 +1,1070 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nahwu — Al Jumlah Al Fi'liyah</title>
+<style>
+/* ─── Design tokens ─── */
+:root {
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --surface2: #f1f3f7;
+  --border: #e4e8ef;
+  --ink: #1a2236;
+  --ink2: #4a5568;
+  --ink3: #8896a8;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent2: #0ea5e9;
+  --green: #16a34a;
+  --green-soft: #f0fdf4;
+  --red: #dc2626;
+  --red-soft: #fef2f2;
+  --amber: #d97706;
+  --amber-soft: #fffbeb;
+  --purple: #7c3aed;
+  --purple-soft: #f5f3ff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.06);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --font-ar: "Segoe UI", "Noto Sans Arabic", "Arabic Typesetting", "Traditional Arabic", system-ui, sans-serif;
+  --font-ui: "Inter", "Segoe UI", system-ui, sans-serif;
+  --transition: .18s cubic-bezier(.4,0,.2,1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1117; --surface: #1a1f2e; --surface2: #232838;
+    --border: #2d3448; --ink: #f0f4ff; --ink2: #9ba8bf; --ink3: #5a6480;
+    --accent: #3b82f6; --accent-soft: #1e2d4a;
+    --green: #22c55e; --green-soft: #0f2a1a;
+    --red: #ef4444; --red-soft: #2a1010;
+    --amber: #f59e0b; --amber-soft: #2a1f07;
+    --purple: #a78bfa; --purple-soft: #1e1630;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.3); --shadow: 0 4px 12px rgba(0,0,0,.35);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1117; --surface: #1a1f2e; --surface2: #232838;
+  --border: #2d3448; --ink: #f0f4ff; --ink2: #9ba8bf; --ink3: #5a6480;
+  --accent: #3b82f6; --accent-soft: #1e2d4a;
+  --green: #22c55e; --green-soft: #0f2a1a;
+  --red: #ef4444; --red-soft: #2a1010;
+  --amber: #f59e0b; --amber-soft: #2a1f07;
+  --purple: #a78bfa; --purple-soft: #1e1630;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3); --shadow: 0 4px 12px rgba(0,0,0,.35);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.4);
+}
+
+/* ─── Reset & base ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit;background:none;border:none;outline:none}
+a{color:inherit;text-decoration:none}
+svg{display:block;flex-shrink:0}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* ─── Layout ─── */
+#app{display:flex;flex-direction:column;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(248,249,251,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;gap:16px}
+@media(prefers-color-scheme:dark){.topbar{background:rgba(15,17,23,.85)}}
+[data-theme=dark] .topbar{background:rgba(15,17,23,.85)}
+.topbar-brand{display:flex;align-items:center;gap:10px;flex:1}
+.topbar-logo{width:32px;height:32px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
+.topbar-title{font-weight:700;font-size:15px;line-height:1.2}
+.topbar-sub{font-size:11px;color:var(--ink3);line-height:1}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--ink2);transition:var(--transition);background:var(--surface2);border:1px solid var(--border)}
+.icon-btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+/* XP bar */
+.xp-strip{height:3px;background:var(--border);border-radius:0}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.main{flex:1;max-width:1100px;width:100%;margin:0 auto;padding:24px 20px 80px}
+
+/* ─── Cards & containers ─── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.card-lg{border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+
+/* ─── Hero / Stats bar ─── */
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;box-shadow:var(--shadow-sm)}
+.hero-text h1{font-size:20px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.hero-text p{font-size:13px;color:var(--ink2)}
+.hero-stats{display:flex;gap:16px;flex-wrap:wrap;margin-right:auto}
+.stat-box{text-align:center;padding:10px 16px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);min-width:72px}
+.stat-box .val{font-size:20px;font-weight:800;color:var(--accent);font-family:var(--font-ui)}
+.stat-box .lbl{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.xp-info{display:flex;flex-direction:column;gap:6px;min-width:160px}
+.xp-label{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3)}
+.xp-bar-wrap{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.xp-bar-inner{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .6s}
+
+/* ─── Chapter grid ─── */
+.section-title{font-size:13px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title::before{content:'';width:3px;height:14px;background:var(--accent);border-radius:2px;display:block}
+.chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:32px}
+.chapter-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:8px}
+.chapter-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,var(--accent-soft) 0%,transparent 70%);transition:opacity var(--transition)}
+.chapter-card:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-2px)}
+.chapter-card:hover::before{opacity:1}
+.chapter-card .ch-num{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+.chapter-card .ch-title{font-family:var(--font-ar);font-size:16px;font-weight:700;color:var(--ink);line-height:1.5;direction:rtl}
+.chapter-card .ch-sub{font-size:11px;color:var(--ink3);direction:rtl;font-family:var(--font-ar);line-height:1.5}
+.chapter-card .ch-meta{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.chapter-card .ch-count{font-size:11px;color:var(--ink3);background:var(--surface2);padding:2px 8px;border-radius:99px;border:1px solid var(--border)}
+.chapter-card .ch-stars{display:flex;gap:2px}
+.chapter-card .ch-stars span{width:10px;height:10px;border-radius:50%;background:var(--border);display:block}
+.chapter-card .ch-stars span.on{background:var(--amber)}
+.chapter-card .ch-prog{height:3px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:6px}
+.chapter-card .ch-prog-fill{height:100%;background:var(--green);border-radius:99px;transition:width .4s}
+
+/* ─── Chapter detail ─── */
+.chapter-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink2);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;transition:var(--transition);flex-shrink:0;margin-top:3px}
+.back-btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.chapter-title-wrap{flex:1}
+.chapter-title-wrap h2{font-family:var(--font-ar);font-size:22px;font-weight:800;direction:rtl;line-height:1.4}
+.chapter-title-wrap .ch-badge{font-size:11px;color:var(--ink3);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:2px 10px;display:inline-block;margin-top:4px}
+.tab-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--ink2);background:var(--surface2);border:1px solid var(--border);transition:var(--transition)}
+.tab-btn:hover{color:var(--ink);border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.tab-btn .tab-icon{font-size:15px}
+
+/* ─── Panel ─── */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm);min-height:300px}
+
+/* ─── Flashcard ─── */
+.fc-wrap{max-width:580px;margin:0 auto}
+.fc-progress{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.fc-progress .fp-label{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fc-progress .fp-bar{flex:1;height:4px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.fc-progress .fp-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+.card-scene{perspective:1400px;height:280px;margin-bottom:16px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;cursor:pointer}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);border:1.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;transition:border-color var(--transition)}
+.card-face.front{background:var(--surface)}
+.card-face.back{background:var(--accent-soft);border-color:var(--accent);transform:rotateY(180deg)}
+.card-face .badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:3px 10px;margin-bottom:16px}
+.card-face.back .badge{background:var(--accent);color:#fff;border-color:var(--accent)}
+.card-face .card-term{font-family:var(--font-ar);font-size:26px;font-weight:800;color:var(--accent);direction:rtl;line-height:1.4;margin-bottom:8px}
+.card-face .card-hint{font-size:12px;color:var(--ink3);margin-top:8px}
+.card-face .card-def{font-family:var(--font-ar);font-size:16px;color:var(--ink);direction:rtl;line-height:1.7}
+.card-face .card-example{font-family:var(--font-ar);font-size:14px;color:var(--ink2);direction:rtl;line-height:1.6;margin-top:12px;padding:10px 14px;background:var(--surface);border-radius:var(--radius-sm);border:1px solid var(--border);width:100%;text-align:right}
+.fc-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.fc-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;border:1.5px solid var(--border);background:var(--surface);transition:var(--transition)}
+.fc-btn:hover{box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+.fc-btn.good{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+.fc-btn.bad{border-color:var(--red);color:var(--red);background:var(--red-soft)}
+.fc-btn.flip{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+/* ─── Quiz ─── */
+.quiz-wrap{max-width:580px;margin:0 auto}
+.quiz-meta{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.quiz-meta .qm-prog{flex:1;height:4px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.quiz-meta .qm-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+.quiz-meta .qm-score{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px}
+.quiz-meta .qm-combo{font-size:11px;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:99px;padding:2px 8px}
+.quiz-type{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:3px 10px;display:inline-block;margin-bottom:12px}
+.quiz-q{font-family:var(--font-ar);font-size:20px;font-weight:700;color:var(--ink);direction:rtl;line-height:1.5;margin-bottom:6px;padding:16px 20px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border)}
+.quiz-q .qterm{display:block;font-size:26px;color:var(--accent);margin-bottom:4px}
+.quiz-q .qdef{display:block;font-size:16px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.opt-btn{border:1.5px solid var(--border);background:var(--surface);border-radius:var(--radius);padding:12px 16px;font-family:var(--font-ar);font-size:14px;color:var(--ink);direction:rtl;line-height:1.6;text-align:right;transition:var(--transition);cursor:pointer;position:relative}
+.opt-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.opt-btn.correct{border-color:var(--green)!important;background:var(--green-soft)!important;color:var(--green)}
+.opt-btn.wrong{border-color:var(--red)!important;background:var(--red-soft)!important;color:var(--red)}
+.opt-btn:disabled{cursor:default}
+.quiz-fb{min-height:32px;text-align:center;font-size:14px;font-weight:600;margin-top:10px;transition:opacity var(--transition)}
+.quiz-fb.ok{color:var(--green)}.quiz-fb.no{color:var(--red)}
+
+/* ─── Review (list) ─── */
+.review-search{display:flex;gap:8px;margin-bottom:14px}
+.review-search input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;font-size:14px;transition:border-color var(--transition);direction:rtl}
+.review-search input:focus{border-color:var(--accent)}
+.review-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.review-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;transition:var(--transition)}
+.review-card:hover{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.review-card .rc-term{font-family:var(--font-ar);font-size:17px;font-weight:700;color:var(--accent);direction:rtl;margin-bottom:6px}
+.review-card .rc-def{font-family:var(--font-ar);font-size:13px;color:var(--ink2);direction:rtl;line-height:1.7}
+.review-card .rc-ex{font-family:var(--font-ar);font-size:12px;color:var(--ink3);direction:rtl;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.6}
+.review-card .rc-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);background:var(--purple-soft);border-radius:99px;padding:2px 8px;display:inline-block;margin-top:6px}
+.review-card.known{border-right:3px solid var(--green)}
+
+/* ─── Result ─── */
+.result-wrap{text-align:center;padding:20px}
+.result-stars{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.result-star{font-size:36px;filter:grayscale(1);opacity:.25;transition:all .4s}
+.result-star.on{filter:none;opacity:1}
+.result-score{font-size:42px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:4px}
+.result-sub{font-size:14px;color:var(--ink2);margin-bottom:20px}
+.result-xp{font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:4px 14px;display:inline-block;margin-bottom:20px}
+.result-msg{font-size:15px;color:var(--ink2);margin-bottom:24px}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.r-btn{padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:var(--transition);border:1.5px solid var(--border);background:var(--surface)}
+.r-btn:hover{box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+.r-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.r-btn.primary:hover{background:#1d4ed8}
+
+/* ─── Badges overlay ─── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.open{opacity:1;pointer-events:all}
+.overlay-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;width:min(560px,92vw);max-height:80vh;overflow-y:auto;box-shadow:var(--shadow-lg);transform:translateY(12px) scale(.97);transition:transform .25s;direction:rtl}
+.overlay.open .overlay-box{transform:none}
+.overlay-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;direction:rtl}
+.overlay-head h2{font-size:17px;font-weight:800;flex:1}
+.close-btn{width:30px;height:30px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--ink2);transition:var(--transition)}
+.close-btn:hover{background:var(--red-soft);color:var(--red)}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.badge-item{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;transition:var(--transition)}
+.badge-item.earned{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+.badge-item .bi-icon{font-size:28px;filter:grayscale(1);opacity:.3;display:block;margin-bottom:8px}
+.badge-item.earned .bi-icon{filter:none;opacity:1}
+.badge-item .bi-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.badge-item .bi-desc{font-size:10px;color:var(--ink3);line-height:1.4}
+.rank-strip{background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:var(--radius);padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px;direction:rtl}
+.rank-strip .rs-rank{font-size:22px;font-weight:900;color:var(--accent);flex:1}
+.rank-strip .rs-sub{font-size:11px;color:var(--ink2)}
+
+/* ─── Toast ─── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;border-radius:var(--radius);padding:10px 20px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);z-index:999;white-space:nowrap;transition:transform .3s cubic-bezier(.4,0,.2,1);max-width:90vw;white-space:normal;text-align:center}
+.toast.show{transform:translateX(-50%)}
+
+/* ─── Intro section ─── */
+.intro-topics{display:flex;flex-direction:column;gap:8px}
+.intro-topic{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);direction:rtl;font-family:var(--font-ar);font-size:14px;color:var(--ink2);line-height:1.5}
+.intro-topic .it-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+
+/* ─── Empty state ─── */
+.empty{text-align:center;padding:48px 20px;color:var(--ink3)}
+.empty .em-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+.empty p{font-size:14px}
+
+/* ─── Responsive ─── */
+@media(max-width:640px){
+  .topbar{padding:0 14px}.main{padding:16px 14px 72px}
+  .hero{padding:16px 18px}.hero-stats{gap:10px}
+  .chapters-grid{grid-template-columns:1fr 1fr}
+  .opts{grid-template-columns:1fr}
+  .panel{padding:16px}
+  .card-face .card-term{font-size:22px}
+  .result-score{font-size:36px}
+  .topbar-sub{display:none}
+}
+@media(max-width:380px){.chapters-grid{grid-template-columns:1fr}}
+
+/* ─── Print ─── */
+@media print{.topbar,.tab-row,.fc-actions,.quiz-meta,.result-actions{display:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- topbar injected by JS -->
+</div>
+<div class="toast" id="toast"></div>
+<div class="overlay" id="badgesOverlay">
+  <div class="overlay-box" id="badgesBox"></div>
+</div>
+
+<script>
+"use strict";
+/* ══════════════════════════════════════════════
+   DATA — 14 chapters · Nahwu Al Jumlah Al Fi'liyah
+   ══════════════════════════════════════════════ */
+const CHAPTERS = [
+{
+  id:1,title:"الفاعل",sub:"تعريفه · أحكامه · وجوب التأخر",
+  topics:["تعريف الفاعل وأحكامه: الرفع، وجوب تأخره عن رافعه، ووجوب ذكره","إفراد الفعل في حالة تثنية الفاعل أو جمعه — قاعدة: وجرد الفعل إذا ما أسند","تأنيث الفعل المسند لفاعل مؤنث — حالات الوجوب والجواز والامتناع","حذف فعل الفاعل جوازاً أو وجوباً — تقديم المفعول به على الفاعل وحكمه"],
+  cards:[
+    {term:"الفاعل",def:"اسم مرفوع يدل على من قام بالفعل أو اتصف به، ويقع بعد فعله أو شبهه",ex:"جاءَ محمدٌ · ضربَ الطالبُ الكرةَ"},
+    {term:"الرافع للفاعل",def:"يرفع الفاعلَ إما فعلٌ أو شبه فعل (اسم الفاعل، الصفة المشبهة، المصدر، اسم الفعل)",ex:"جاءَ محمدٌ (فعل) · قائمٌ زيدٌ (اسم فاعل)"},
+    {term:"وجوب تأخر الفاعل",def:"يجب تأخر الفاعل عن رافعه (الفعل أو شبهه)، ولا يصح تقدمه عليه",ex:"يضربُ اللاعبُ الكرةَ ✓ · اللاعبُ يضربُ (جملة اسمية لا فعلية) ✗"},
+    {term:"إفراد الفعل مع المثنى والجمع",def:"يُفرد الفعل دائماً إذا تقدم على فاعله المثنى أو الجمع — تاء التثنية والجمع تلحق الاسم فقط",ex:"جاءَ الطالبانِ (لا: جاءا) · حضرَ الطلابُ (لا: حضروا)"},
+    {term:"تأنيث الفعل — واجب",def:"تجب تاء التأنيث للفعل في ثلاث حالات: ①فاعله مؤنث حقيقي متصل بالفعل ②ضمير مستتر عائد لمؤنث ③الفعل للتاء المتحركة",ex:"جاءتْ فاطمةُ · ذهبتْ هندُ"},
+    {term:"تأنيث الفعل — جائز",def:"تجوز التاء وتركها إذا: ①فصل بين الفعل والفاعل المؤنث فاصل ②الفاعل جمع تكسير ③الفاعل مؤنث مجازي",ex:"جاءَ/جاءتْ في الدار هندٌ · جاءَ/جاءتِ الشمسُ"},
+    {term:"تأنيث الفعل — ممتنع",def:"يمتنع تأنيث الفعل إذا كان الفاعل: جمع مذكر سالم، أو فُصل بالفاعل (إلا) والفاعل مؤنث",ex:"ما جاءَ إلا هندٌ (لا: ما جاءتْ إلا هندٌ)"},
+    {term:"حذف فعل الفاعل وجوباً",def:"يُحذف فعل الفاعل وجوباً في الأسلوبَي: الاشتغال — والتنازع — وبعد أدوات العطف في سياقات معينة",ex:"أزيداً ضربتَه؟ — فعل الفاعل محذوف وجوباً"},
+    {term:"الفاعل المؤول بالصريح",def:"قد يكون الفاعل جملة (أن+فعل) مؤولة بمصدر، وتأخذ حكم الفاعل المرفوع",ex:"يسعدُني أنْ تنجحَ — أنْ تنجحَ = نجاحُكَ فاعل"},
+    {term:"تقديم المفعول على الفاعل",def:"يجوز تأخير الفاعل عن المفعول به، ويجب إذا: ①كان الفاعل ضميراً متصلاً ②خيف اللبس ③حصر المفعول بـ(إنما) أو (إلا)",ex:"أكرمَ المعلمَ الطالبُ (جائز) · إنما يخشى اللهَ العلماءُ (واجب)"},
+  ],
+  quiz:[
+    {q:"ما إعراب كلمة (محمدٌ) في: جاءَ محمدٌ؟",opts:["فاعل مرفوع","مبتدأ مرفوع","مفعول به منصوب","خبر مرفوع"],ans:0,ex:"محمد فاعل للفعل جاء، مرفوع وعلامة رفعه الضمة"},
+    {q:"في الجملة: حضرَ الطالبانِ — هل الفعل صحيح؟",opts:["نعم، الفعل يُفرد مع المثنى","لا، يجب: حضرا الطالبانِ","لا، يجب: حضروا الطلاب","نعم لأن الفاعل جمع"],ans:0,ex:"القاعدة: يُفرد الفعل دائماً حين يتقدم على فاعله المثنى أو الجمع"},
+    {q:"متى تجب تاء التأنيث في الفعل الماضي؟",opts:["إذا كان الفاعل مؤنثاً حقيقياً متصلاً بفعله","إذا كان الفاعل جمع مذكر سالماً","إذا فُصل الفعل عن فاعله المؤنث","إذا كان الفاعل مؤنثاً مجازياً"],ans:0,ex:"مثال الوجوب: جاءتْ فاطمةُ — فاطمة مؤنث حقيقي متصل"},
+    {q:"في الجملة: ما جاءَ إلا هندٌ — هل التأنيث صحيح؟",opts:["نعم لأن الفعل فُصل عن الفاعل بـ(إلا)","لا، يجب: ما جاءتْ","نعم لأن هند مؤنث حقيقي","لا لأن هند مؤنث مجازي"],ans:0,ex:"إذا فُصل بين الفعل والفاعل المؤنث بـ(إلا)، جاز حذف التاء بل يُرجَّح"},
+    {q:"(الشمسُ) في: طلعتِ الشمسُ — أي نوع تأنيثه؟",opts:["مؤنث مجازي","مؤنث حقيقي","جمع تكسير","مثنى مؤنث"],ans:0,ex:"الشمس مؤنث مجازي (ليس له جنس طبيعي)"},
+    {q:"في: يسعدُني أنْ تنجحَ — ما وظيفة (أنْ تنجحَ)؟",opts:["فاعل مؤول بالمصدر","مفعول به","مبتدأ","خبر"],ans:0,ex:"أن تنجح = نجاحُك — مصدر مؤول في محل رفع فاعل"},
+    {q:"متى يجب تقديم المفعول على الفاعل؟",opts:["إذا كان الفاعل ضميراً متصلاً","إذا كان الفاعل اسماً ظاهراً","إذا كان المفعول جمعاً","لا يجوز تقديم المفعول أبداً"],ans:0,ex:"مثال: أكرمني المعلمُ — الياء مفعول متقدم، والمعلم فاعل متأخر"},
+    {q:"الفعل (جاءَ) في: جاءَ الطلابُ — هل يصح قول جاؤوا الطلابُ؟",opts:["لا يصح، الفعل يُفرد مع المثنى والجمع","نعم يصح دائماً","يصح فقط مع جمع المؤنث","يصح فقط مع جمع التكسير"],ans:0,ex:"يُفرد الفعل دائماً حين يتقدم على فاعله المثنى أو الجمع"},
+  ]
+},
+{
+  id:2,title:"نائب الفاعل",sub:"بناء الفعل للمجهول · ما ينوب عن الفاعل",
+  topics:["تعريف نائب الفاعل وبناء الفعل للمجهول (ماضٍ ومضارع)","أسباب حذف الفاعل: الجهل، التعظيم، الإيجاز، الخوف","ما ينوب عن الفاعل: المفعول به، الظرف، الجار والمجرور، المصدر","ترتيب الأولوية عند تعدد ما ينوب"],
+  cards:[
+    {term:"نائب الفاعل",def:"اسم مرفوع حلَّ محل الفاعل بعد حذفه، وأخذ أحكامه كلها (رفع + إفراد الفعل)",ex:"ضُرِبَ المجرمُ — المجرمُ نائب فاعل مرفوع"},
+    {term:"بناء الماضي للمجهول",def:"يُضم أوله ويُكسر ما قبل آخره في كل أحواله",ex:"كتَبَ ← كُتِبَ · قاتَلَ ← قُوتِلَ · أكرمَ ← أُكرِمَ · استعملَ ← اُستُعمِلَ"},
+    {term:"بناء المضارع للمجهول",def:"يُضم أوله ويُفتح ما قبل آخره",ex:"يكتبُ ← يُكتَبُ · يقاتلُ ← يُقاتَلُ · يُكرمُ ← يُكرَمُ"},
+    {term:"أسباب حذف الفاعل",def:"①الجهل بالفاعل ②التعظيم ③الخوف منه ④الإيجاز والاختصار ⑤عدم التعلق بشخص الفاعل",ex:"سُرِقَ المنزلُ (جهل) · خُلِقَ الإنسانُ (تعظيم لله)"},
+    {term:"ما ينوب عن الفاعل",def:"ينوب عن الفاعل بعد حذفه: ①المفعول به (الأولى) ②الظرف المتصرف ③الجار والمجرور ④المصدر",ex:"كُسِرَ الزجاجُ (مفعول به) · جُلِسَ أمامَكَ (ظرف)"},
+    {term:"الأولوية في الإنابة",def:"إذا اجتمع بعد فعل المجهول: مفعول به + ظرف + مصدر + جار ومجرور — يُقدَّم المفعول به",ex:"أُعطيَ زيدٌ الكتابَ — زيد نائب فاعل (مفعول أول)"},
+    {term:"الفعل اللازم للمجهول",def:"الفعل اللازم لا ينوب عنه مفعول به، فينوب عنه الظرف أو الجار والمجرور أو المصدر",ex:"جُلِسَ أمامَ المسجدِ · سيرٌ سيرٌ طويلٌ (مصدر)"},
+  ],
+  quiz:[
+    {q:"ما نائب الفاعل في: كُتِبَ الدرسُ؟",opts:["الدرسُ","كُتِبَ","لا يوجد","الدرسَ"],ans:0,ex:"الدرسُ نائب فاعل مرفوع وعلامة رفعه الضمة"},
+    {q:"كيف تبني الفعل (كَتَبَ) للمجهول؟",opts:["كُتِبَ","كَتُبَ","كُتَبَ","كِتِبَ"],ans:0,ex:"الماضي للمجهول: يُضم الأول ويُكسر ما قبل الأخير"},
+    {q:"كيف تبني المضارع (يَكتُبُ) للمجهول؟",opts:["يُكتَبُ","يُكتِبُ","يَكتُبُ","يُكتُبُ"],ans:0,ex:"المضارع للمجهول: يُضم الأول ويُفتح ما قبل الأخير"},
+    {q:"في: سُرِقَ المنزلُ — ما سبب حذف الفاعل؟",opts:["الجهل بالفاعل","التعظيم","الخوف","الإيجاز"],ans:0,ex:"نجهل من سرق المنزل فحذف الفاعل لأجل الجهل"},
+    {q:"إذا اجتمع مفعول به وظرف بعد فعل مجهول، فأيهما يصير نائب فاعل؟",opts:["المفعول به لأنه أقرب للفاعل","الظرف لأنه أبسط","أيهما شئت","الجار والمجرور"],ans:0,ex:"الأولوية: المفعول به ثم الظرف ثم الجار والمجرور ثم المصدر"},
+    {q:"ما نائب الفاعل في: جُلِسَ أمامَ المسجدِ؟",opts:["أمام (ظرف)","المسجد","جُلِسَ","لا نائب"],ans:0,ex:"الفعل جلس لازم، فناب عن الفاعل الظرف (أمام)"},
+    {q:"في: أُعطيَ زيدٌ كتاباً — ما إعراب (زيدٌ)؟",opts:["نائب فاعل (مفعول أول)","فاعل","مفعول به","مبتدأ"],ans:0,ex:"زيد في الأصل مفعول به أول أخذ مكان الفاعل فصار نائب فاعل"},
+  ]
+},
+{
+  id:3,title:"أبنية المصادر",sub:"مصادر الثلاثي وغير الثلاثي · مصدر المرة والهيئة",
+  topics:["أنواع المصدر: الصريح، المؤول، مصدر المرة، مصدر الهيئة","مصادر الأفعال الثلاثية: أوزانها وضوابطها المعنوية","مصادر الأفعال غير الثالثية: الرباعي والخماسي والسداسي","مصدر المرة (فَعلة) والهيئة (فِعلة) وكيفية صياغتهما"],
+  cards:[
+    {term:"المصدر",def:"اسم يدل على الحدث مجرداً من الزمان، وهو أصل الفعل والوصف في رأي جمهور النحاة",ex:"كتابة، ضرب، انطلاق، استغفار"},
+    {term:"مصادر الثلاثي المتعدي",def:"لا ضابط له ويُحفظ من المعجم، والأكثر شيوعاً: فَعْل وفَعَل وفِعَال",ex:"نَصَرَ نَصْراً · ضَرَبَ ضَرْباً · قاتَلَ قِتالاً"},
+    {term:"مصادر الثلاثي اللازم على فَعِلَ",def:"يأتي على: ①فَعَل (لازم اللزوم) ②فُعول ③فَعِيل (بمعنى الصوت أو العِلَّة)",ex:"فَرِحَ فَرَحاً · جَلَسَ جُلوساً · صاحَ صِياحاً"},
+    {term:"مصادر الرباعي (أفعل، فعّل، فاعل)",def:"أَفعل → إفعال · فَعَّل → تفعيل · فاعَل → مُفاعَلة (وفِعَال)",ex:"أكرمَ إكراماً · علَّمَ تعليماً · قاتَلَ مُقاتلةً وقِتالاً"},
+    {term:"مصادر الخماسي والسداسي (بهمزة وصل)",def:"يُؤتى بمصدره بكسر ثالثه وزيادة ألف قبل آخره",ex:"انطلقَ انطلاقاً · اجتمعَ اجتماعاً · استعملَ استعمالاً"},
+    {term:"مصادر الخماسي (بتاء زائدة)",def:"مصدره مطابق لمضارعه مع إبدال حرف المضارعة تاءً",ex:"تعلَّمَ ← يتعلَّمُ ← تعلُّماً · تقاتلَ ← يتقاتلُ ← تقاتُلاً"},
+    {term:"مصدر المرة",def:"يدل على حدوث الفعل مرة واحدة، يُصاغ على فَعْلة من الثلاثي وعلى مصدر+تاء مربوطة من غيره",ex:"ضربَ ← ضَرْبة · انطلقَ ← انطلاقة · تعلَّمَ ← تعلُّمة"},
+    {term:"مصدر الهيئة",def:"يدل على هيئة الفعل وكيفيته، يُصاغ على فِعْلة (بكسر الفاء) من الثلاثي فقط",ex:"جلسَ ← جِلْسة · مشى ← مِشْية · لبسَ ← لِبْسة"},
+  ],
+  quiz:[
+    {q:"ما مصدر الفعل: تعلَّمَ؟",opts:["تعلُّماً","تعليماً","تعلَّماً","تعلُّمة"],ans:0,ex:"الخماسي بتاء زائدة: يطابق مضارعه مع إبدال حرف المضارعة تاءً"},
+    {q:"ما مصدر الفعل: استغفرَ؟",opts:["استغفاراً","إغفاراً","غُفراناً","استغفُراً"],ans:0,ex:"السداسي بهمزة وصل: يُكسر ثالثه وتُزاد ألف قبل آخره"},
+    {q:"ما مصدر الفعل: أكرمَ؟",opts:["إكراماً","إكرامةً","تكريماً","مُكارمةً"],ans:0,ex:"أَفعل → إفعال (يُقلب الهمزة وتُزاد ألف)"},
+    {q:"ما وزن مصدر (تعليم)؟",opts:["تفعيل","إفعال","مفاعلة","فِعال"],ans:0,ex:"علَّمَ على وزن فَعَّلَ → مصدره على وزن تفعيل"},
+    {q:"كيف تصوغ مصدر المرة من: انطلقَ؟",opts:["انطلاقة","انطلاقاً","طَلْقة","مُنطلَقة"],ans:0,ex:"من غير الثلاثي: مصدر + تاء مربوطة = انطلاق + ة = انطلاقة"},
+    {q:"ما الفرق بين مصدر المرة والهيئة من الثلاثي؟",opts:["المرة: فَعْلة — الهيئة: فِعْلة","كلاهما: فَعْلة","المرة: فِعْلة — الهيئة: فَعْلة","لا فرق بينهما"],ans:0,ex:"ضَرْبة (مرة) — جِلْسة (هيئة)، الفتح للمرة والكسر للهيئة"},
+    {q:"ما مصدر الفعل: قاتلَ؟",opts:["مُقاتَلةً وقِتالاً","قِتالاً فقط","قَتْلاً","مُقاتَلةً فقط"],ans:0,ex:"فاعَل → مُفاعَلة وفِعَال، فله مصدران"},
+    {q:"مصدر الهيئة يُصاغ من:",opts:["الثلاثي فقط","كل الأفعال","غير الثلاثي فقط","الرباعي والخماسي"],ans:0,ex:"مصدر الهيئة (فِعْلة) يُصاغ من الثلاثي فقط"},
+  ]
+},
+{
+  id:4,title:"جمع التكسير",sub:"جمع القلة · جمع الكثرة · صيغ منتهى الجموع",
+  topics:["تعريف جمع التكسير وأقسامه: القلة والكثرة","جمع القلة: أربعة أوزان (أَفْعُل، أَفعال، أَفعِلة، فِعلة)","جمع الكثرة: أوزانها الكثيرة وصيغ منتهى الجموع (مفاعِل، مفاعيل…)","إعراب صيغ منتهى الجموع: منصرفة وغير منصرفة"],
+  cards:[
+    {term:"جمع التكسير",def:"ما دل على أكثر من اثنين مع تغيير في بنية مفرده (بزيادة أو حذف أو تغيير الحركات)",ex:"كتاب ← كُتُب · رجل ← رجال · عالِم ← علماء"},
+    {term:"جمع القلة",def:"يدل على ثلاثة إلى عشرة، وله أربعة أوزان: أَفْعُل، أَفعال، أَفعِلة، فِعلة",ex:"أَقمار، أَبحار، أَسلحة، فِتية"},
+    {term:"جمع الكثرة",def:"يدل على أكثر من عشرة، وله أوزان كثيرة منها: فُعُول، فِعَال، فُعَلَاء، فُعول، أفعال",ex:"كُتُب، رجال، علماء، قلوب"},
+    {term:"صيغ منتهى الجموع",def:"كل جمع تكسير بعد ألف تكسيره حرفان أو ثلاثة (أوسطها ساكن) — ممنوعة من الصرف",ex:"مساجِد، مفاتيح، دراهِم، قناطير، أساتِذَة"},
+    {term:"وزن أَفعُل",def:"جمع قلة لأوزان متعددة من ثلاثة حروف أو أربعة",ex:"نَفس ← أَنفُس · يَد ← أَيدٍ · جبل ← أَجبُل (قليل)"},
+    {term:"وزن أَفعِلة",def:"جمع قلة للثلاثي المؤنث المزيد بهاء أو الرباعي المذكر",ex:"سِلاح ← أَسلِحة · كِتاب ← أَكتِبة · طعام ← أَطعِمة"},
+    {term:"وزن فُعَلاء",def:"جمع كثرة لوزن فَعيل الدال على الصفة أو الوزن فَعَل، ممنوع من الصرف",ex:"عليم ← عُلَماء · شريف ← شُرَفاء · كريم ← كُرَماء"},
+    {term:"وزن مَفاعِل / مَفاعيل",def:"صيغتا منتهى الجموع — ممنوعتان من الصرف، يُجرّان بالفتحة",ex:"مسجد ← مَساجِد · مفتاح ← مَفاتيح · أستاذ ← أساتِذة"},
+  ],
+  quiz:[
+    {q:"ما وزن جمع: (مساجد)؟",opts:["مَفاعل — صيغة منتهى الجموع","أَفعِلة — جمع قلة","فُعَلاء — جمع كثرة","فِعلة — جمع قلة"],ans:0,ex:"مساجد على وزن مَفاعِل، وهي صيغة منتهى الجموع ممنوعة من الصرف"},
+    {q:"كم عدد أوزان جمع القلة؟",opts:["أربعة","ثلاثة","خمسة","ستة"],ans:0,ex:"أوزان جمع القلة: أَفعُل، أَفعال، أَفعِلة، فِعلة"},
+    {q:"ما جمع (عالِم)؟",opts:["علماء","عوالم","عُلُم","أعلام"],ans:0,ex:"عالم على وزن فاعِل → جمع كثرة: عُلَماء (وزن فُعَلاء)"},
+    {q:"ما ضابط صيغ منتهى الجموع؟",opts:["بعد ألف التكسير حرفان أو ثلاثة أوسطها ساكن","جمع يبدأ بألف","جمع فيه هاء التأنيث","جمع على وزن أَفعال"],ans:0,ex:"مثال: مَساجِد (ألف+حرفان)، مَفاتيح (ألف+ثلاثة أوسطها ساكن)"},
+    {q:"لماذا تُجَرُّ (مساجدَ) بالفتحة في: صليتُ في مساجدَ كثيرةٍ؟",opts:["لأنها ممنوعة من الصرف (صيغة منتهى الجموع)","لأنها مفعول به","لأنها اسم مجرور بالكسرة","لأنها تنوين"],ans:0,ex:"صيغ منتهى الجموع ممنوعة من الصرف فتُجَرُّ بالفتحة نيابة عن الكسرة"},
+    {q:"ما مفرد (فِتية)؟",opts:["فتىً","فتاة","فتيان","فتوة"],ans:0,ex:"فِتية جمع قلة على وزن فِعلة، مفردها فتىً"},
+    {q:"ما وزن (شُرَفاء)؟",opts:["فُعَلاء","أفعلاء","فِعلاء","مَفاعل"],ans:0,ex:"شُرَفاء جمع شريف على وزن فُعَلاء، ممنوع من الصرف"},
+  ]
+},
+{
+  id:5,title:"التصغير",sub:"أوزانه · شروطه · كيفيته",
+  topics:["أغراض التصغير: التقليل، التحقير، التقريب، التعطف","تعريفه وشروطه: الاسم المعرب، غير مبدوء بتاء التأنيث…","أوزان التصغير الثلاثة: فُعيل، فُعيعِل، فُعيعيل","مواضع الفتح بعد ياء التصغير — تصغير المثنى والجمع"],
+  cards:[
+    {term:"التصغير",def:"تحويل الاسم إلى صيغة تدل على التصغير بزيادة ياء ساكنة ثالثة وضم الأول وفتح ما بعد الياء",ex:"كتاب ← كُتيِّب · رجل ← رُجيل · قلم ← قُليم"},
+    {term:"أوزان التصغير",def:"ثلاثة أوزان: ①فُعيل (للثلاثي) ②فُعيعِل (للرباعي) ③فُعيعيل (للخماسي)",ex:"جبل → جُبيل · درهم → دُريهِم · مفتاح → مُفيتيح"},
+    {term:"شروط المُصغَّر",def:"①اسم معرب ②غير مضاف إلى ياء المتكلم في الغالب ③ليس من أسماء التعظيم كـ(الله،الرحمن) ④ليس من الأسماء المبهمة",ex:"لا يُصغَّر: الله، الرحمن، من، ما، أيّ، ذا"},
+    {term:"الفتح بعد ياء التصغير",def:"يجب فتح ما بعد ياء التصغير إذا جاء بعدها: تاء التأنيث، ألف التأنيث المقصورة أو الممدودة، ياء النسب",ex:"مسلم ← مُسيلِمة (تاء) · حُبيلى (مقصورة) · حُميراء (ممدودة)"},
+    {term:"تصغير ما ثانيه حرف لين",def:"إذا كان الثاني حرف مد (واو أو ألف أو ياء)، رُدَّ إلى أصله أو قُلب ياءً",ex:"باب ← بُويب (أصله بَوب) · ناب ← نُييب · موز ← مُويز"},
+    {term:"تصغير الثلاثي المؤنث",def:"الثلاثي المؤنث المجرد من علامة التأنيث يُصغَّر ثم تُلحقه تاء التأنيث",ex:"شمس ← شُميسة · نفس ← نُفيسة · عين ← عُيينة"},
+    {term:"تصغير جمع التكسير",def:"يُردّ جمع التكسير إلى مفرده ثم يُصغَّر ثم يُجمع، أو يُجمع على (أُفيعِلة، أُفيعال)",ex:"كِتاب ← كُتُب ← يُصغَّر المفرد: كُتيِّب ثم يُجمع: كُتيبات"},
+    {term:"ما لا يُعتَدُّ به في التصغير",def:"يُهمل عند التصغير: همزة الوصل، تاء التأنيث القياسية، الحرف الزائد للمد في بعض المواضع",ex:"استغفار ← اُسيتغيفير (تُحذف همزة الوصل وتُضم التي تليها)"},
+  ],
+  quiz:[
+    {q:"ما تصغير (كتاب)؟",opts:["كُتيِّب","كِتيب","كَتوب","كُتُبيل"],ans:0,ex:"كتاب رباعي → فُعيعِل → كُتيِّب"},
+    {q:"ما وزن تصغير الثلاثي؟",opts:["فُعيل","فُعيعِل","فُعيعيل","فَعيل"],ans:0,ex:"الثلاثي (3 أحرف) يُصغَّر على وزن فُعيل: رجل → رُجيل"},
+    {q:"ما تصغير (مفتاح)؟",opts:["مُفيتيح","مُفتيح","فُتيح","مُفيتح"],ans:0,ex:"مفتاح خماسي → فُعيعيل → مُفيتيح"},
+    {q:"ما تصغير الاسم المؤنث (شمس)؟",opts:["شُميسة","شُميس","شَميسة","شُيمس"],ans:0,ex:"الثلاثي المؤنث: يُصغَّر ثم تُضاف تاء التأنيث → شُميسة"},
+    {q:"ما غرض التصغير في: (جُبيل قريب)؟",opts:["التقريب","التحقير","التقليل","التعطف"],ans:0,ex:"قُريب وجُبيل تفيد قرب المكان — غرض التصغير هنا التقريب"},
+    {q:"ما تصغير (باب)؟",opts:["بُويب","بُبيب","بَبيب","بِيب"],ans:0,ex:"باب أصله بَوَب (ثانيه واو مدية) → يُردُّ إلى أصله → بُويب"},
+    {q:"أي هذه الأسماء لا يُصغَّر؟",opts:["الله (للتعظيم)","كتاب","قلم","رجل"],ans:0,ex:"أسماء التعظيم كالله والرحمن لا تُصغَّر صوناً لها"},
+  ]
+},
+{
+  id:6,title:"تعدي الفعل ولزومه والمفعول به",sub:"الفعل المتعدي · اللازم · المفعول به",
+  topics:["تعريف الفعل المتعدي وعلامته: قبوله (هاء الغيبة) بدون حرف جر","أقسام المتعدي: متعدٍّ لمفعول واحد، اثنين (أفعال القلوب، ظن، أعطى)، ثلاثة","الفعل اللازم وعلامته ومواضعه","المفعول به: تعريفه، تقديمه وتأخيره، حذفه وامتناع حذفه"],
+  cards:[
+    {term:"الفعل المتعدي",def:"ما يتعدى أثره إلى المفعول به ويقبل (هاء الغيبة) دون حرف جر",ex:"ضربَ (ضربه) ✓ · علَّمَ (علَّمه) ✓"},
+    {term:"الفعل اللازم",def:"ما لا يتعدى إلى المفعول به ولا يقبل هاء الغيبة إلا بحرف جر",ex:"جلسَ (جلس به ✗) · ذهبَ (ذهب به بحرف جر ✓)"},
+    {term:"المتعدي لمفعولين",def:"نوعان: ①أعطى وأخواتها — أصل المفعولين ليس المبتدأ والخبر ②ظنَّ وأخواتها — أصل المفعولين المبتدأ والخبر",ex:"أعطيتُ زيداً كتاباً · ظننتُ زيداً مجتهداً"},
+    {term:"المتعدي لثلاثة مفاعيل",def:"أفعال: أعلمَ، أرى، نبَّأ، خبَّر، حدَّث — المفعول الثاني والثالث أصلهما المبتدأ والخبر",ex:"أعلمتُ زيداً عمراً أميراً"},
+    {term:"المفعول به",def:"اسم منصوب وقع عليه فعل الفاعل، وهو فضلة (يمكن حذفه من الناحية الإعرابية)",ex:"قرأَ الطالبُ الكتابَ — الكتابَ مفعول به"},
+    {term:"تقديم المفعول على الفعل",def:"يجوز تقديمه، ويجب في: ①إذا كان الفاعل ضميراً متصلاً ②أسلوب الاشتغال ③الاستفهام والشرط",ex:"أزيداً ضربتَ؟ (اشتغال) — وجوب التقديم"},
+    {term:"حذف المفعول به",def:"يجوز حذفه إذا دلَّ الدليل عليه، ويمتنع إذا كان لازماً للإفادة أو في التعجب ونحوه",ex:"حذف جائز: مَن قرأ؟ قرأتُ (أي: قرأتُ الكتاب)"},
+    {term:"الفعل الذي يتعدى بنفسه وبحرف الجر",def:"بعض الأفعال تتعدى بنفسها وبحرف الجر بمعنى مختلف",ex:"شكرتُه (بنفسه) · شكرتُ له (بحرف)"},
+  ],
+  quiz:[
+    {q:"ما الفرق بين الفعل المتعدي واللازم؟",opts:["المتعدي يقبل هاء الغيبة بلا حرف جر، واللازم لا يقبلها","المتعدي لازم والعكس","المتعدي لا فاعل له","اللازم يتعدى لمفعولين"],ans:0,ex:"ضرب (يضربه ✓ متعدٍّ) — جلس (يجلسه ✗ لازم)"},
+    {q:"كم مفعولاً يأخذ الفعل (أعلمَ)؟",opts:["ثلاثة مفاعيل","مفعولاً واحداً","مفعولين","لا مفعول"],ans:0,ex:"أعلمَ من أفعال القلوب المتعدية لثلاثة: أعلمتُه إياه حاضراً"},
+    {q:"في: ظننتُ زيداً مجتهداً — ما (زيداً)؟",opts:["مفعول به أول","مفعول به ثانٍ","فاعل","مبتدأ"],ans:0,ex:"ظنَّ تتعدى لمفعولين أصلهما المبتدأ والخبر: زيدٌ مجتهدٌ"},
+    {q:"متى يجب تقديم المفعول على الفاعل؟",opts:["إذا كان الفاعل ضميراً لا يصح تقدمه","إذا أردنا التوكيد","إذا كان الفعل ماضياً","دائماً"],ans:0,ex:"أكرمَني زيدٌ — الياء مفعول متقدم وجوباً لأن الفاعل (زيد) اسم ظاهر"},
+    {q:"في: (أعطيتُ زيداً كتاباً) — ما نوع الجملة؟",opts:["فعل متعدٍّ لمفعولين (أعطى وأخواتها)","فعل لازم","فعل متعدٍّ لثلاثة","فعل متعدٍّ لواحد"],ans:0,ex:"أعطى وأخواتها تتعدى لمفعولين لا أصلهما المبتدأ والخبر"},
+    {q:"في: (قرأَ الطالبُ) — هل حذف المفعول جائز؟",opts:["نعم، جائز لوجود دليل السياق","لا، يجب ذكره","لا يمكن حذفه أبداً","يجب ذكر المفعول"],ans:0,ex:"الحذف جائز إذا دلَّ الدليل، وهنا السياق يدل على مفعول محذوف"},
+    {q:"ما الفعل اللازم في هذه الأفعال؟",opts:["ذهبَ","ضربَ","أكلَ","علَّمَ"],ans:0,ex:"ذهب لازم (لا يتعدى)، بينما: ضرب، أكل، علَّم كلها متعدية"},
+  ]
+},
+{
+  id:7,title:"المفعول المطلق",sub:"تعريفه · أنواعه · ما ينوب عنه",
+  topics:["تعريف المفعول المطلق وسبب تسميته","أنواعه الثلاثة: التوكيد، النوع، العدد","ما ينوب عن المصدر في النصب على المفعولية المطلقة","حذف عامل المفعول المطلق جوازاً ووجوباً"],
+  cards:[
+    {term:"المفعول المطلق",def:"مصدر منصوب يُذكر توكيداً لفعله أو بياناً لنوعه أو عدده، وسُمِّي مطلقاً لعدم تقييده بحرف",ex:"ضربتُه ضرباً · سرتُ سيراً حثيثاً · ضربتُه ضربتين"},
+    {term:"نوع المفعول المطلق — توكيد",def:"يُذكر لمجرد توكيد معنى الفعل — ويُنصب وحده بدون وصف",ex:"قامَ زيدٌ قياماً · ضربتُه ضرباً (بدون وصف)"},
+    {term:"نوع المفعول المطلق — نوع",def:"يُذكر مع صفة أو إضافة لبيان نوع الفعل وكيفيته",ex:"سرتُ سيراً حثيثاً · ضربتُه ضربَ المعلمِ (إضافة)"},
+    {term:"نوع المفعول المطلق — عدد",def:"يُذكر بصيغة العدد (مصدر مرة) لبيان عدد مرات وقوع الفعل",ex:"ضربتُه ضربتين · ضربتُه ثلاثَ ضرباتٍ"},
+    {term:"ما ينوب عن المصدر",def:"ينوب عن المصدر في المفعول المطلق: ①مصدر مرادف ②صفته ③ضميره ④إشارة إليه ⑤ما يدل على نوعه",ex:"افعلْ ذلك (ضميره) · سرتُ أيَّما سيرٍ · جلستُ جلوسَ الملوك"},
+    {term:"حذف عامل المفعول المطلق",def:"يُحذف العامل: ①جوازاً إذا دلَّ الدليل ②وجوباً في صيغ التعجب وأسلوب المدح والذم وبعض المصادر",ex:"سمعاً وطاعةً (محذوف وجوباً) · صبراً (محذوف جوازاً)"},
+    {term:"العامل في المفعول المطلق",def:"العامل فيه: ①الفعل التام ②اسم الفاعل ③الصفة المشبهة ④المصدر الصريح",ex:"ضارباً ضرباً شديداً (اسم فاعل) · ضربي إياه ضرباً (مصدر)"},
+  ],
+  quiz:[
+    {q:"لماذا سُمِّي المفعول المطلق (مطلقاً)؟",opts:["لأنه غير مقيَّد بحرف جر خلافاً لغيره","لأنه مطلق التصرف","لأنه يأتي دائماً","لأنه يفيد الإطلاق الزمني"],ans:0,ex:"المفعول المطلق غير مقيَّد بحرف جر كالمفعول فيه أو المفعول معه"},
+    {q:"في: ضربتُه ضرباً شديداً — ما نوع المفعول المطلق؟",opts:["مفعول مطلق للنوع","مفعول مطلق للتوكيد","مفعول مطلق للعدد","ليس مفعولاً مطلقاً"],ans:0,ex:"النوع يُذكر مع وصف أو إضافة — (شديداً) وصف فهو للنوع"},
+    {q:"في: ضربتُه ضربتين — ما نوع المفعول المطلق؟",opts:["مفعول مطلق للعدد","مفعول مطلق للتوكيد","مفعول مطلق للنوع","مفعول به"],ans:0,ex:"ضربتين مصدر مرة بصيغة المثنى تدل على عدد مرات الضرب"},
+    {q:"في: سمعاً وطاعةً — ما حكم المحذوف (العامل)؟",opts:["واجب الحذف","جائز الحذف","مستحيل الحذف","الحذف مرفوض"],ans:0,ex:"في صيغ التعجب والدعاء ونحوها يُحذف العامل وجوباً"},
+    {q:"ما الذي ينوب عن المصدر في: (سرتُ أيَّما سيرٍ)؟",opts:["نائب يدل على نوعه (أيّ)","مصدر مرادف","ضمير المصدر","اسم الإشارة"],ans:0,ex:"(أيَّما) تدل على النوع فتنوب عن المصدر في المفعولية المطلقة"},
+    {q:"ما العامل في: ضارباً ضرباً شديداً؟",opts:["اسم الفاعل (ضارباً)","الفعل","الصفة المشبهة","المصدر"],ans:0,ex:"اسم الفاعل يعمل عمل فعله فنصب المفعول المطلق"},
+    {q:"في: صبراً يا أيوب — العامل؟",opts:["محذوف وجوباً (اصبر)","محذوف جوازاً","مذكور","لا عامل"],ans:0,ex:"صبراً مفعول مطلق محذوف العامل وجوباً تقديره: اصبر صبراً"},
+  ]
+},
+{
+  id:8,title:"المفعول له",sub:"تعريفه · شروطه · أحواله",
+  topics:["تعريف المفعول له (لأجله) وشروطه الأربعة","حكم المفعول له عند استيفاء شروطه: جواز النصب","أحواله الثلاثة: نصب (كثير)، جر بالحرف (كثير)، جواز الأمرين","متى يُرجَّح النصب؟ ومتى يُرجَّح الجر؟"],
+  cards:[
+    {term:"المفعول له (لأجله)",def:"مصدر قلبي منصوب يُذكر لبيان علة الفعل وسببه، يُجيب عن (لماذا؟)",ex:"قمتُ إجلالاً للمعلم · جئتُ رغبةً في العلم"},
+    {term:"شروط المفعول له",def:"①مصدر ②قلبي (يصدر عن قلب) ③متحد مع الفعل في الفاعل ④متحد في الزمان",ex:"قمتُ إجلالاً — إجلال مصدر قلبي، الفاعل واحد (أنا)، الزمن واحد"},
+    {term:"ما لا يستوفي الشروط",def:"إذا لم تستوفَ الشروط، يُجَرُّ بحرف التعليل (اللام، من، في)",ex:"جئتُ للعلمِ (ليس قلبياً) · أكلتُ للشبعِ · خرجتُ من خوفٍ"},
+    {term:"أحوال المفعول له — النصب",def:"يكثر النصب إذا تجرَّد من (ال) والإضافة",ex:"قمتُ إجلالاً · جئتُ رغبةً · أسرعتُ خوفاً"},
+    {term:"أحوال المفعول له — الجر",def:"يكثر الجر إذا اقترن بـ(ال) أو أُضيف",ex:"قمتُ للإجلالِ · جئتُ لإجلالِ المعلمِ"},
+    {term:"جواز الأمرين",def:"يستوي النصب والجر إذا اقترن بضمير الإضافة",ex:"قمتُ إجلالَكَ / لإجلالِكَ (كلاهما جائز)"},
+  ],
+  quiz:[
+    {q:"في: قمتُ إجلالاً للمعلم — ما (إجلالاً)؟",opts:["مفعول له منصوب","مفعول مطلق","حال","تمييز"],ans:0,ex:"إجلال مصدر قلبي يبيِّن علة القيام — مفعول له منصوب"},
+    {q:"ما شروط المفعول له الأربعة؟",opts:["مصدر · قلبي · متحد الفاعل · متحد الزمان","ظرف · قلبي · مجرور · متحد","اسم · قلبي · نكرة · منصوب","مصدر · ظاهر · مشتق · متحد"],ans:0,ex:"المفعول له يجب أن يكون: مصدراً، قلبياً، متحد الفاعل، متحد الزمان مع فعله"},
+    {q:"في: جئتُ للعلمِ — لماذا جُرَّ (العلم) ولم يُنصب؟",opts:["لأن العلم ليس مصدراً قلبياً","لأنه مضاف","لأن الزمن مختلف","لأن الفاعل مختلف"],ans:0,ex:"العلم ليس مصدراً قلبياً فلا يستوفي شروط المفعول له فيُجَرُّ باللام"},
+    {q:"متى يكثر نصب المفعول له؟",opts:["إذا تجرَّد من (ال) والإضافة","إذا اقترن بـ(ال)","إذا أُضيف","إذا تقدَّم"],ans:0,ex:"النكرة المجردة يكثر فيها النصب: قمتُ إجلالاً"},
+    {q:"في: قمتُ لإجلالِ المعلمِ — ما إعراب (إجلال)؟",opts:["اسم مجرور باللام","مفعول له منصوب","مفعول مطلق","مفعول به"],ans:0,ex:"لمَّا أُضيف إجلال جُرَّ باللام وهو الكثير عند الإضافة"},
+    {q:"في: قمتُ إجلالَكَ أو لإجلالِكَ — ما الحكم؟",opts:["كلاهما جائز","النصب واجب فقط","الجر واجب فقط","كلاهما ممنوع"],ans:0,ex:"عند الإضافة إلى الضمير يستوي النصب والجر"},
+  ]
+},
+{
+  id:9,title:"المفعول فيه (الظرف)",sub:"تعريفه · أنواعه · المتصرف وغير المتصرف",
+  topics:["تعريف الظرف (المفعول فيه) — معنى (في) باطراد","ظرف الزمان وظرف المكان — ناصبهما وشروطهما","المبهم والمختص من الظروف — ما يقبل النصب","الظرف المتصرف وغير المتصرف — ما ينوب عن الظرف"],
+  cards:[
+    {term:"المفعول فيه (الظرف)",def:"اسم منصوب يتضمن معنى (في) ويدل على زمان الفعل أو مكانه",ex:"جلستُ أمامَكَ · سرتُ يوماً كاملاً"},
+    {term:"ظرف الزمان",def:"ما دلَّ على الزمان الذي وقع فيه الفعل، وناصبه الفعل أو شبهه",ex:"جئتُ صباحاً · درستُ ليلةً · سرتُ يوماً"},
+    {term:"ظرف المكان",def:"ما دلَّ على المكان الذي وقع فيه الفعل، لا يُنصب إلا إذا كان مبهماً",ex:"جلستُ أمامَكَ · وقفتُ خلفَ البابِ · سرتُ ميلاً"},
+    {term:"المبهم والمختص",def:"المبهم: لا يُفهم إلا بإضافة أو وصف (أمام، خلف، فوق) — يُنصب على الظرفية. المختص: له حدود معينة (مسجد، مدرسة) — لا يُنصب غالباً",ex:"جلستُ أمامَكَ (مبهم) · جلستُ المسجدَ ✗ (مختص يُجرُّ)"},
+    {term:"الظرف المتصرف",def:"ما يجيء ظرفاً وغير ظرف (مبتدأ أو فاعلاً أو مفعولاً به…)",ex:"صباحٌ مبارك (مبتدأ) · شهدتُ اليومَ (مفعول به) · جئتُ يومَ الجمعة (ظرف)"},
+    {term:"الظرف غير المتصرف",def:"ما يلازم النصبَ على الظرفية أو الجرَّ بـ(من) ولا يأتي في غيرهما",ex:"عندَ، لدى، حيثُ، قَطُّ، إذ، إذا — لا تأتي فاعلاً أو مبتدأً"},
+    {term:"ما ينوب عن الظرف",def:"ينوب عن الظرف: المصدر، وجملة، واسم عدد — خاصة في ظرف الزمان",ex:"سرتُ طلوعَ الشمس (مصدر نائب عن ظرف الزمان)"},
+    {term:"حذف ناصب الظرف",def:"يُحذف ناصب الظرف: ①جوازاً إذا دلَّ عليه الدليل ②وجوباً بعد (لو) أو (أما) الشرطية",ex:"أما يومَ الجمعة فأنا مسافر (حذف وجوباً)"},
+  ],
+  quiz:[
+    {q:"ما المقصود بالمفعول فيه؟",opts:["اسم منصوب يتضمن معنى (في) ويدل على زمان الفعل أو مكانه","مصدر يدل على الفعل","اسم الزمان دائماً","اسم المكان دائماً"],ans:0,ex:"الظرف هو المفعول فيه لأن الفعل يقع (في) ذلك الزمان أو المكان"},
+    {q:"متى يُنصب اسم المكان على الظرفية؟",opts:["إذا كان مبهماً (أمام، خلف…)","إذا كان مختصاً (مسجد، مدرسة)","دائماً","أبداً"],ans:0,ex:"المبهم يُنصب (جلستُ أمامَكَ)، المختص يُجَرُّ بـ(في) غالباً"},
+    {q:"في: جئتُ صباحاً — ما (صباحاً)؟",opts:["ظرف زمان","ظرف مكان","حال","مفعول مطلق"],ans:0,ex:"صباح يدل على زمان المجيء — ظرف زمان منصوب"},
+    {q:"ما الظرف غير المتصرف من هذه الألفاظ؟",opts:["عندَ","يوماً","مكاناً","زماناً"],ans:0,ex:"(عند) ملازم للنصب أو الجر بـ(من) ولا يأتي فاعلاً أو مبتدأً"},
+    {q:"في: أما يومَ الجمعة فأنا مسافر — حكم حذف العامل؟",opts:["واجب الحذف","جائز الحذف","مستحيل","مذكور"],ans:0,ex:"بعد (أما) يُحذف الناصب وجوباً — التقدير: أما في يوم الجمعة"},
+    {q:"ما الذي ينوب عن ظرف الزمان؟",opts:["المصدر — مثل: سرتُ طلوعَ الشمس","الصفة فقط","الضمير","اسم الإشارة"],ans:0,ex:"المصدر ينوب عن ظرف الزمان كثيراً كما قال ابن مالك"},
+    {q:"في: جلستُ أمامَكَ — ما (أمام)؟",opts:["ظرف مكان مبهم منصوب","ظرف زمان","حال","خبر"],ans:0,ex:"أمام ظرف مكان مبهم منصوب على الظرفية"},
+  ]
+},
+{
+  id:10,title:"المفعول معه",sub:"تعريفه · الناصب · أحواله",
+  topics:["تعريف المفعول معه وناصبه: الواو بمعنى المعية","أحوال الاسم الواقع بعد الواو: العطف، المعية، جواز الأمرين","متى يجب النصب؟ ومتى يُرجَّح؟","متى يتعين العطف؟"],
+  cards:[
+    {term:"المفعول معه",def:"اسم منصوب يقع بعد واو المعية (بمعنى مع)، ويدل على مصاحبة الفاعل له في الفعل",ex:"سرتُ والنهرَ · ذاكرتُ خالداً وأصواتَ الطيور"},
+    {term:"ناصب المفعول معه",def:"ينصبه الفعل أو شبهه الذي قبله، والواو حرف بمعنى (مع) تُفسِّر النصب",ex:"سرتُ والنهرَ — الفعل (سرتُ) هو الناصب"},
+    {term:"أحوال الاسم بعد الواو",def:"①العطف: إذا صحَّ الاشتراك ②المعية: إذا لم يصح الاشتراك ③جواز الأمرين: إذا صح الاشتراك مع قرينة",ex:"جاءَ زيدٌ وعمرٌو (عطف) · سرتُ والنهرَ (معية) · ذاكرتُ وخالداً (جائز)"},
+    {term:"وجوب النصب على المعية",def:"يجب النصب إذا لم يصح عطف ما بعد الواو على ما قبلها (عدم الاشتراك في الفعل)",ex:"خرجتُ من المعهدِ وأذانَ الظهر — الأذان لا يشترك في الخروج"},
+    {term:"ترجيح العطف",def:"يُرجَّح العطف إذا صحَّ الاشتراك وكان بين متعاطفين يصلح أن يقوما بالفعل معاً",ex:"كنتُ أنا وخالدٌ كالأخوين — العطف أرجح لصحة الاشتراك"},
+    {term:"ترجيح النصب على المعية",def:"يُرجَّح النصب إذا كان عطف ما بعد الواو يُخلُّ بالمعنى أو يُوجد ضعفاً في الصياغة",ex:"ذاكرتُ وخالداً (أرجح من: ذاكرتُ وخالدٌ)"},
+  ],
+  quiz:[
+    {q:"في: سرتُ والنهرَ — ما (النهرَ)؟",opts:["مفعول معه منصوب","مفعول به","عطف على التاء","حال"],ans:0,ex:"النهر لا يشاركني في السير فهو مفعول معه بمعنى (مع النهر)"},
+    {q:"ما الناصب للمفعول معه؟",opts:["الفعل أو شبهه السابق","الواو","الحرف الجار","التنوين"],ans:0,ex:"الواو بمعنى (مع) وتُفسِّر النصب، أما الناصب الحقيقي فهو الفعل"},
+    {q:"في: جاءَ زيدٌ وعمرٌو — ما (عمرٌو)؟",opts:["معطوف على زيد (فاعل)","مفعول معه","مفعول به","مبتدأ"],ans:0,ex:"عمرو يصح أن يشترك في المجيء فهو معطوف على زيد"},
+    {q:"متى يجب النصب على المعية؟",opts:["إذا لم يصح اشتراك ما بعد الواو في الفعل","إذا صح الاشتراك","دائماً","أبداً"],ans:0,ex:"خرجتُ من المعهدِ وأذانَ الظهر — الأذان لا يشترك في الخروج"},
+    {q:"في: كنتُ أنا وخالدٌ كالأخوين — ما الأرجح؟",opts:["العطف لصحة الاشتراك","النصب على المعية","كلاهما سواء","الجر بالواو"],ans:0,ex:"كلاهما يصح أن يكون كالأخوين فالعطف أرجح لصحة الاشتراك"},
+    {q:"في: ذاكرتُ وخالداً — ما الأرجح؟",opts:["النصب على المعية","العطف","كلاهما سواء","الجر"],ans:0,ex:"ذاكرتُ وخالداً — خالد قد لا يشاركني في المذاكرة فالنصب أرجح"},
+  ]
+},
+{
+  id:11,title:"التنازع",sub:"تعريفه · إعمال المُهمَل في ضمير المتنازع فيه",
+  topics:["تعريف التنازع والعاملان المتنازعان والاسم المتنازع فيه","أيُّ العاملين أولى بالعمل: البصريون يُعملون الثاني، الكوفيون الأول","إعمال المُهمَل في ضمير الاسم المتنازع فيه","حكم الضمير المهمل بعد إعمال الثاني"],
+  cards:[
+    {term:"التنازع",def:"أن يتقدم عاملان (فعلان أو اسما فاعل) ويتأخر عنهما اسم واحد يصلح أن يكون معمولاً لكل منهما",ex:"قامَ وقعدَ زيدٌ — زيد يصلح فاعلاً لـ(قام) أو لـ(قعد)"},
+    {term:"أركان التنازع",def:"①العاملان (الفعلان) ②الاسم المتنازع فيه ③إهمال أحد العاملين في الاسم الظاهر",ex:"جاءَ وذهبَ محمدٌ — العاملان: جاء وذهب، المتنازع فيه: محمد"},
+    {term:"أولوية الإعمال — البصريون",def:"البصريون يُعملون العامل الثاني (الأقرب) لأنه يطلب الاسم مباشرة",ex:"قامَ وقعدَ زيدٌ — الإعمال لـ(قعد): قعد زيدٌ — فاعل الأول محذوف"},
+    {term:"أولوية الإعمال — الكوفيون",def:"الكوفيون يُعملون العامل الأول (الأبعد) لأنه المبادِر بالطلب",ex:"قامَ وقعدَ زيدٌ — الإعمال لـ(قام): قام زيدٌ — مفعول/فاعل الثاني محذوف"},
+    {term:"إعمال المُهمَل في الضمير",def:"العامل المُهمَل لا يبقى بلا عمل، فيعمل في ضمير الاسم المتنازع فيه",ex:"قامَ وأكرمتُه زيدٌ — أكرمتُ أعملت في (زيد) والأول أعمل في ضميره (الهاء)"},
+    {term:"أنواع الضمير المحذوف",def:"إذا أُعمل الثاني: يبرز الضمير مع فعل الأول إن كان مفعولاً، ويُستتر إن كان فاعلاً",ex:"أكرمني وأكرمتُه زيدٌ (مفعول) · جاءَ وذهبَ زيدٌ (فاعل — مستتر)"},
+  ],
+  quiz:[
+    {q:"ما التنازع؟",opts:["عاملان يطلب كل منهما اسماً واحداً","فعل له فاعلان","عاملان ومعمولان","فعلان لاسمين"],ans:0,ex:"التنازع: طلب عاملين (فعلين) لاسم واحد — كل منهما يريده معمولاً"},
+    {q:"في: قامَ وقعدَ زيدٌ — مَن يُعمِل البصريون؟",opts:["(قعد) الثاني الأقرب","(قام) الأول","كلاهما معاً","لا أحدهما"],ans:0,ex:"البصريون يُعملون الأقرب (الثاني) لأنه يطلب الاسم مباشرة"},
+    {q:"في: أكرمني وأكرمتُه زيدٌ — ما (الهاء) في (أكرمتُه)؟",opts:["ضمير نائب عن زيد في عمل العامل المُهمَل","مفعول به","فاعل","زائد"],ans:0,ex:"أُعمل الأول (أكرمني) في زيد، وعمل الثاني في ضميره (الهاء)"},
+    {q:"ما أركان التنازع؟",opts:["عاملان + اسم متنازع فيه + إهمال أحدهما","فعل واحد وفاعلان","فاعل ومفعولان","عاملان ومعمولان"],ans:0,ex:"التنازع يتطلب عاملين وسم واحد يصلح معمولاً لكل منهما"},
+    {q:"في: جاءَ وذهبَ محمدٌ — إذا أعملنا الثاني (ذهب)، ما حكم فاعل الأول (جاء)؟",opts:["يستتر في الفعل (ضمير مستتر)","يُذكر صراحةً","يُحذف نهائياً","يصبح مفعولاً"],ans:0,ex:"إذا أُعمل الثاني وكان الأول يطلب فاعلاً — يستتر الضمير في الأول"},
+  ]
+},
+{
+  id:12,title:"الاشتغال",sub:"تعريفه · ناصب الاسم المشغول عنه · أحواله",
+  topics:["تعريف الاشتغال وأركانه: الاسم المقدَّم، الفعل، الضمير","ناصب الاسم المشغول عنه: فعل محذوف يفسِّره المذكور","متى يجب النصب؟ ومتى يجب الرفع؟ ومتى يجوز الأمران؟","شروط صحة أسلوب الاشتغال"],
+  cards:[
+    {term:"الاشتغال",def:"أن يتقدم اسم ويتأخر عنه فعل مشغول بضميره — فينتصب الاسم بفعل محذوف يفسِّره المذكور",ex:"زيداً ضربتُه — زيد منصوب بـ(ضربتُ) محذوف يفسِّره (ضربتُه)"},
+    {term:"أركان الاشتغال",def:"①الاسم المقدَّم (المشغول عنه) ②الفعل المشغول ③الضمير (الشغل)",ex:"محمداً أكرمتُه — محمداً: مشغول عنه · أكرمت: مشغول · الهاء: الشغل"},
+    {term:"وجوب النصب",def:"يجب نصب الاسم المشغول عنه إذا وقع بعد أداة تطلب الفعل (إذا، إن، حيث، أداة تحضيض، عرض…)",ex:"إذا زيداً رأيتَه فأكرمه — وجوب النصب لأن بعد (إذا)"},
+    {term:"وجوب الرفع",def:"يجب رفع الاسم المشغول عنه إذا لم يصح تقدير فعل قبله، أو وقع بعد (إذا الفجائية)",ex:"إذا الطالبُ نجحَ فهو مجتهد (إذا الفجائية)"},
+    {term:"جواز الأمرين",def:"يجوز الرفع والنصب إذا لم توجد قرينة مرجِّحة لأحدهما، أو إذا أمكن تأويل الاسم بالمبتدأ أو بالمفعول",ex:"الكتابَ قرأتُه / الكتابُ قرأتُه (كلاهما جائز)"},
+    {term:"ناصب الاسم المشغول عنه",def:"ناصبه فعل محذوف من لفظ الفعل المذكور أو من معناه — والفعل المذكور يفسِّره",ex:"زيداً ضربتُه — ناصبه: ضربتُ (المحذوف) والمذكور يفسِّره"},
+  ],
+  quiz:[
+    {q:"في: زيداً ضربتُه — ما الاسم المشغول عنه؟",opts:["زيداً","ضربتُ","الهاء","لا يوجد"],ans:0,ex:"زيداً اسم تقدَّم وانشغل الفعل عنه بضميره (الهاء)"},
+    {q:"ما ناصب الاسم في أسلوب الاشتغال؟",opts:["فعل محذوف يفسِّره المذكور","الفعل المذكور مباشرة","الضمير","لا ناصب"],ans:0,ex:"زيداً ضربتُه — الناصب: ضربتُ المحذوفة تفسيراً للمذكورة"},
+    {q:"في: إذا محمداً رأيتَه — ما حكم محمد؟",opts:["واجب النصب","واجب الرفع","جائز الأمرين","ممتنع"],ans:0,ex:"إذا أداة شرط تطلب الفعل، فيجب نصب ما بعدها في الاشتغال"},
+    {q:"في: إذا الطالبُ نجحَ — ما حكم (الطالب)؟",opts:["واجب الرفع (إذا الفجائية)","واجب النصب","جائز الأمرين","ممنوع"],ans:0,ex:"إذا الفجائية لا تطلب الفعل فيجب رفع الاسم بعدها مبتدأً"},
+    {q:"ما أركان أسلوب الاشتغال؟",opts:["الاسم المقدم + الفعل المشغول + الضمير","فعلان واسم","اسم وفعلان","اسمان وفعل"],ans:0,ex:"الأركان: محمداً (مشغول عنه) + أكرمت (مشغول) + الهاء (الشغل)"},
+    {q:"في: الكتابَ قرأتُه / الكتابُ قرأتُه — ما الحكم؟",opts:["كلاهما جائز","النصب فقط","الرفع فقط","كلاهما ممنوع"],ans:0,ex:"لا قرينة مرجِّحة فيجوز الأمران: النصب على الاشتغال والرفع على الابتداء"},
+  ]
+},
+{
+  id:13,title:"الاستثناء",sub:"إلَّا · غير وسوى · خلا وعدا وحاشا",
+  topics:["تعريف الاستثناء وأركانه: المستثنى منه، أداة الاستثناء، المستثنى","أحكام المستثنى بـ(إلا): واجب النصب، جائز النصب والإتباع، الاستثناء المفرَّغ","الاستثناء بغير إلا: غير وسوى، ليس ولا يكون","الاستثناء بـ(خلا وعدا وحاشا)"],
+  cards:[
+    {term:"الاستثناء",def:"إخراج اسم من حكم ما قبله بأداة من أدوات الاستثناء",ex:"جاءَ الطلابُ إلَّا زيداً — زيد مستثنى من الطلاب"},
+    {term:"أنواع الاستثناء",def:"①التام الموجب (إلا+مستثنى منه) ②التام المنفي ③المفرَّغ (لا مستثنى منه) ④المتصل ⑤المنقطع",ex:"جاء الطلاب إلا زيداً (تام) · ما جاء إلا زيدٌ (مفرَّغ)"},
+    {term:"المستثنى بإلا — واجب النصب",def:"يجب نصب المستثنى في: ①التام الموجب ②التام المنفي المتصل والمنقطع",ex:"جاءَ الطلابُ إلَّا زيداً (تام موجب — نصب واجب)"},
+    {term:"المستثنى بإلا — البدل والنصب",def:"في التام المنفي: يجوز النصب على الاستثناء أو البدل من المستثنى منه",ex:"ما جاءَ الطلابُ إلَّا زيداً (نصب) / إلَّا زيدٌ (بدل)"},
+    {term:"الاستثناء المفرَّغ",def:"ما لم يُذكر فيه المستثنى منه — يُعرب ما بعد إلا حسب موقعه في الجملة",ex:"ما جاءَ إلَّا زيدٌ (فاعل) · ما رأيتُ إلَّا زيداً (مفعول به)"},
+    {term:"الاستثناء بغير وسوى",def:"(غير وسوى) يُعربان مثل المستثنى بإلا، ويُضافان إلى المستثنى",ex:"جاءَ الطلابُ غيرَ زيدٍ (غير: مستثنى منصوب — زيد: مضاف إليه)"},
+    {term:"الاستثناء بـليس ولا يكون",def:"(ليس ولا يكون) فعلان ناقصان — المستثنى خبرهما المنصوب",ex:"جاءَ الطلابُ ليسَ زيداً / لا يكونُ زيداً — زيداً خبر ليس منصوب"},
+    {term:"الاستثناء بخلا وعدا وحاشا",def:"إذا تقدمتها (ما): يُنصب المستثنى. بدون (ما): يجوز النصب والجر",ex:"جاءَ الكلُّ ما خلا زيداً (نصب بعد ما) · خلا زيدٍ/زيداً (جر أو نصب)"},
+  ],
+  quiz:[
+    {q:"في: جاءَ الطلابُ إلَّا زيداً — ما إعراب (زيداً)؟",opts:["مستثنى منصوب (تام موجب — واجب النصب)","فاعل","بدل","مفعول به"],ans:0,ex:"تام موجب: يجب نصب المستثنى بـ(إلا)"},
+    {q:"في: ما جاءَ الطلابُ إلَّا زيداً/زيدٌ — ما الجائز؟",opts:["النصب (استثناء) أو الرفع (بدل)","النصب فقط","الرفع فقط","الجر فقط"],ans:0,ex:"التام المنفي يجوز فيه النصب على الاستثناء والرفع/نصب على البدل"},
+    {q:"في: ما جاءَ إلَّا زيدٌ — ما نوع الاستثناء؟",opts:["مفرَّغ (لا مستثنى منه)","تام موجب","تام منفي","منقطع"],ans:0,ex:"الاستثناء المفرَّغ: لا مستثنى منه — وزيد فاعل لـ(جاء)"},
+    {q:"ما إعراب (غير) في: جاءَ الطلابُ غيرَ زيدٍ؟",opts:["مستثنى منصوب بالفتحة","فاعل","مفعول به","حال"],ans:0,ex:"غير مستثنى منصوب كـ(إلا) وهي مضافة إلى زيد"},
+    {q:"في: جاءَ الكل ما خلا زيداً — لماذا نُصب (زيداً)؟",opts:["لأن (ما) تقدمت فصيَّرت خلا فعلاً متعدياً","لأنه مستثنى بإلا","لأن خلا حرف جر","لأنه مفعول فيه"],ans:0,ex:"(ما) المصدرية تجعل خلا وعدا فعلين متعديين فيُنصب المستثنى"},
+    {q:"في: ما جاءَ إلَّا زيداً — ما إعراب (زيداً)؟",opts:["مفعول به (لا مستثنى)","مستثنى منصوب","بدل","فاعل"],ans:0,ex:"في الاستثناء المفرَّغ يُعرب ما بعد إلا بحسب موقعه: هنا مفعول به لـ(جاء)"},
+    {q:"في: جاءَ الطلابُ ليسَ زيداً — ما إعراب (زيداً)؟",opts:["خبر ليس منصوب (مستثنى)","اسم ليس","مفعول به","حال"],ans:0,ex:"زيداً خبر ليس منصوب، وهو في معنى الاستثناء"},
+  ]
+},
+{
+  id:14,title:"الحال والتمييز",sub:"تعريفهما · أوصافهما · الفروق بينهما",
+  topics:["الحال: تعريفها، أوصافها (منتقلة، مشتقة، نكرة)، صاحب الحال","ترتيب الحال مع صاحبها وعاملها — الحال جملة — حذف العامل","التمييز: نوعاه (ذات ونسبة)، حكمه الإعرابي","الفروق بين الحال والتمييز"],
+  cards:[
+    {term:"الحال",def:"وصف فضلة منصوب يبيِّن هيئة صاحبه (الفاعل أو المفعول) عند وقوع الفعل",ex:"جاءَ الطالبُ مجتهداً · قرأتُ الكتابَ واقفاً"},
+    {term:"أوصاف الحال",def:"الأصل في الحال أن تكون: ①منتقلة (تتغير) ②مشتقة ③نكرة ④صادرة عن معرفة",ex:"جاءَ زيدٌ راكباً (منتقلة) · هذا الحديدُ سيفاً (جامدة — بمعنى المشبَّه به)"},
+    {term:"الحال الجامدة",def:"تجيء الحال جامدة في مواضع: ①المؤوَّلة بمشتق ②الحال سعراً ③بعد (أما) ④في التشبيه",ex:"هذا مالُكَ درهماً (سعر) · هذا ذهباً أثمنُ من الفضة"},
+    {term:"صاحب الحال",def:"الأصل أن يكون معرفة، وقد يكون نكرة إذا: تأخرت أو تقدمت أو وصفت أو عملت عملاً",ex:"جاءَ رجلٌ مسرعاً (نكرة — صاحب الحال) — جاز لتأخر الحال"},
+    {term:"حذف عامل الحال",def:"يُحذف عامل الحال: ①جوازاً إذا دلَّ عليه الدليل ②وجوباً في أساليب معينة كـ(أما) والجواب",ex:"راكباً (إذا قيل: كيف جئتَ؟) — حذف جوازاً · أما راكباً فلا (وجوباً)"},
+    {term:"التمييز",def:"اسم نكرة منصوب يُبيِّن المقصود من اسم قبله مبهم في ذاته أو في نسبته",ex:"اشتريتُ رطلاً زيتاً (ذات) · طابَ زيدٌ نفساً (نسبة)"},
+    {term:"نوعا التمييز",def:"①تمييز الذات: يُبيِّن جنس اسم مبهم (عدد، مقدار، مكيل، موزون) ②تمييز النسبة: يُبيِّن غموضاً في نسبة الجملة",ex:"عندي عشرون كتاباً (ذات) · فجَّرنا الأرضَ عيوناً (نسبة)"},
+    {term:"الفروق بين الحال والتمييز",def:"الحال: يُبيِّن الهيئة، مشتق غالباً، منتقل، يصح (في حال…). التمييز: يُبيِّن الجنس/النسبة، جامد غالباً، ثابت، يصح (من جهة…)",ex:"جاءَ زيدٌ مسرعاً (حال: يصح — في حال إسراعٍ) · طاب زيدٌ نفساً (تمييز: يصح — من جهة النفس)"},
+    {term:"إعراب تمييز العدد",def:"من 3-10 مجرور جمعاً · من 11-99 منصوب مفرداً · من 100-1000+ مجرور مفرداً",ex:"ثلاثةُ كتبٍ · خمسةَ عشرَ كتاباً · مئةُ كتابٍ"},
+  ],
+  quiz:[
+    {q:"في: جاءَ الطالبُ مجتهداً — ما (مجتهداً)؟",opts:["حال منصوبة","تمييز","مفعول به","مفعول مطلق"],ans:0,ex:"مجتهداً تبيِّن هيئة الطالب عند مجيئه — حال منصوبة"},
+    {q:"الأصل في الحال أن تكون:",opts:["منتقلة مشتقة نكرة","ثابتة جامدة معرفة","ثابتة مشتقة معرفة","منتقلة جامدة نكرة"],ans:0,ex:"الأصل: منتقلة (تتغير) + مشتقة + نكرة — والعكس جائز بقرائن"},
+    {q:"في: طابَ زيدٌ نفساً — ما (نفساً)؟",opts:["تمييز نسبة","حال","مفعول مطلق","تمييز ذات"],ans:0,ex:"نفساً رفع الإبهام عن نسبة الطيب إلى زيد — تمييز نسبة"},
+    {q:"في: عندي عشرون كتاباً — ما (كتاباً)؟",opts:["تمييز ذات (بعد العدد 11-99)","حال","مفعول به","مفعول مطلق"],ans:0,ex:"تمييز العدد من 11-99: منصوب مفرد — كتاباً تمييز منصوب"},
+    {q:"ما الفرق الرئيسي بين الحال والتمييز؟",opts:["الحال يبيِّن الهيئة (في حال)، التمييز يبيِّن الجنس (من جهة)","كلاهما يبيِّن الهيئة","لا فرق بينهما","الحال جامد والتمييز مشتق"],ans:0,ex:"اختبار الحال: يصح (في حال…) | اختبار التمييز: يصح (من جهة…)"},
+    {q:"في: ثلاثةُ كتبٍ — ما إعراب (كتبٍ)؟",opts:["مضاف إليه مجرور","تمييز منصوب","مفعول به","حال"],ans:0,ex:"من 3-10: التمييز مجرور جمعاً — ثلاثةُ كتبٍ (كتب مضاف إليه)"},
+    {q:"في: جاءَ راكباً — ما حكم العامل؟",opts:["محذوف جوازاً","محذوف وجوباً","مذكور","ممتنع الحذف"],ans:0,ex:"إذا دلَّ الدليل على العامل جاز حذفه — السياق يدل على: جاءَ"},
+    {q:"الحال الجامدة تجيء في:",opts:["التشبيه والسعر وبعد (أما)","لا تجيء أبداً","مع الأعداد فقط","في الإنشاء دائماً"],ans:0,ex:"الحال جامدة في: هذا ذهباً (تشبيه) · بعتُه الكيلو درهماً (سعر)"},
+  ]
+}
+];
+
+/* ══════════════════════════════════
+   STATE & PERSISTENCE
+══════════════════════════════════ */
+const KEY = "nahwu-filiyah-v1";
+let S;
+function loadState() {
+  try { S = JSON.parse(localStorage.getItem(KEY)) || {}; } catch { S = {}; }
+  S.xp = S.xp || 0;
+  S.known = S.known || {};
+  S.best = S.best || {};
+  S.badges = S.badges || {};
+  S.days = S.days || {};
+  S.maxCombo = S.maxCombo || 0;
+  S.fastMatch = S.fastMatch || null;
+  S.combo = 0;
+}
+function saveState() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} }
+loadState();
+
+/* ══════════════════════════════════
+   HELPERS
+══════════════════════════════════ */
+const RANKS = [
+  [0,"مبتدئ"],[200,"طالب نحو"],[600,"قارئ"],[1400,"نحوي"],[3000,"بليغ"],[6000,"نحوي بارع"]
+];
+const BADGES = [
+  {id:"start",icon:"🌱",name:"البداية",desc:"أول نشاط في التطبيق"},
+  {id:"k20",icon:"📖",name:"عشرون بطاقة",desc:"حفظت ٢٠ بطاقة"},
+  {id:"k60",icon:"📚",name:"ستون بطاقة",desc:"حفظت ٦٠ بطاقة"},
+  {id:"q3",icon:"⭐",name:"أول نجمة",desc:"حققت ٣ نجوم في باب"},
+  {id:"q3x5",icon:"🌟",name:"خمسة أبواب",desc:"ثلاث نجوم في ٥ أبواب"},
+  {id:"c10",icon:"🔥",name:"سلسلة اشتعال",desc:"١٠ إجابات صحيحة متتالية"},
+  {id:"all",icon:"🏆",name:"أتقنتَ الكل",desc:"نجمة واحدة على الأقل في كل الأبواب"},
+  {id:"d3",icon:"📅",name:"مداومة",desc:"تدربتَ في ثلاثة أيام"},
+];
+
+function rankOf(xp) {
+  let r = RANKS[0], nx = null;
+  RANKS.forEach((k,i)=>{ if(xp>=k[0]){r=k; nx=RANKS[i+1]||null;} });
+  return {r,nx};
+}
+function starsOf(id) {
+  const b = S.best[id] || 0;
+  return b>=100?3 : b>=75?2 : b>=50?1 : 0;
+}
+function totalStars() {
+  return CHAPTERS.reduce((a,c)=>a+starsOf(c.id),0);
+}
+function knownCount() { return Object.keys(S.known).length; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function shuffle(a){ a=[...a]; for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function gainXP(n) {
+  const br = rankOf(S.xp).r[1];
+  S.xp += n;
+  S.days[new Date().toDateString()] = 1;
+  saveState();
+  renderTopbar();
+  const ar = rankOf(S.xp).r[1];
+  if(ar !== br) showToast(`🎉 لقبٌ جديد: ${ar}`);
+  checkBadges();
+}
+function checkBadges() {
+  const g = (id,cond) => {
+    if(cond && !S.badges[id]) {
+      S.badges[id]=1; saveState();
+      const b = BADGES.find(x=>x.id===id);
+      if(b) showToast(`${b.icon} وسامٌ جديد: ${b.name}`);
+    }
+  };
+  const kn = knownCount(), s3 = CHAPTERS.filter(c=>starsOf(c.id)===3).length;
+  const allOne = CHAPTERS.every(c=>starsOf(c.id)>=1);
+  g("start", S.xp>0);
+  g("k20", kn>=20);
+  g("k60", kn>=60);
+  g("q3", s3>=1);
+  g("q3x5", s3>=5);
+  g("c10", S.maxCombo>=10);
+  g("all", allOne);
+  g("d3", Object.keys(S.days).length>=3);
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerHTML = msg;
+  t.classList.add("show");
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>t.classList.remove("show"), 2800);
+}
+
+/* ══════════════════════════════════
+   RENDER ENGINE
+══════════════════════════════════ */
+let VIEW = {screen:"home"};
+function go(v){ VIEW=v; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function render() {
+  renderTopbar();
+  if(VIEW.screen==="home") renderHome();
+  else if(VIEW.screen==="chapter") renderChapter(VIEW.id, VIEW.tab||"flash");
+}
+
+/* ── Topbar ── */
+function renderTopbar() {
+  const {r,nx} = rankOf(S.xp);
+  const pct = nx ? Math.round((S.xp-r[0])/(nx[0]-r[0])*100) : 100;
+  const top = document.getElementById("app");
+  let tb = document.getElementById("topbar-el");
+  if(!tb){ tb=document.createElement("div"); tb.id="topbar-el"; top.prepend(tb); }
+  tb.innerHTML = `
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-logo">ن</div>
+      <div><div class="topbar-title">النحو — الجملة الفعلية</div>
+      <div class="topbar-sub">Nahwu Al Jumlah Al Fi'liyah — UAS ${new Date().getFullYear()}</div></div>
+    </div>
+    <div class="topbar-actions">
+      <span style="font-size:12px;color:var(--ink3);font-weight:600">${r[1]}</span>
+      <button class="icon-btn" id="badgesBtn" title="الأوسمة">🏅</button>
+      <button class="icon-btn" id="themeBtn" title="الوضع الليلي">◐</button>
+    </div>
+  </div>
+  <div class="xp-strip"><div class="xp-fill" style="width:${pct}%"></div></div>`;
+  document.getElementById("themeBtn").onclick = toggleTheme;
+  document.getElementById("badgesBtn").onclick = openBadges;
+}
+
+/* ── Home ── */
+function renderHome() {
+  const app = document.getElementById("app");
+  let main = document.getElementById("main-content");
+  if(!main){ main=document.createElement("div"); main.id="main-content"; app.appendChild(main); }
+
+  const {r,nx} = rankOf(S.xp);
+  const pct = nx ? Math.round((S.xp-r[0])/(nx[0]-r[0])*100):100;
+  const kn = knownCount();
+  const ts = totalStars();
+
+  main.innerHTML = `
+  <div class="main">
+    <div class="hero">
+      <div class="hero-text">
+        <h1>كيسي-كيسي UAS — نحو الجملة الفعلية</h1>
+        <p>Semester Gasal 2026-2027 · Prodi Bahasa dan Sastra Arab · ${CHAPTERS.length} Bab</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box"><div class="val">${S.xp}</div><div class="lbl">XP</div></div>
+        <div class="stat-box"><div class="val">${kn}</div><div class="lbl">Hafalan</div></div>
+        <div class="stat-box"><div class="val">${ts}</div><div class="lbl">Bintang</div></div>
+        <div class="xp-info">
+          <div class="xp-label"><span>${r[1]}</span>${nx?`<span>${S.xp}/${nx[0]}</span>`:''}</div>
+          <div class="xp-bar-wrap"><div class="xp-bar-inner" style="width:${pct}%"></div></div>
+          ${nx?`<div class="xp-label" style="font-size:10px"><span>Menuju: ${nx[1]}</span></div>`:'<div class="xp-label" style="font-size:10px;color:var(--amber)"><span>🏆 Level Tertinggi!</span></div>'}
+        </div>
+      </div>
+    </div>
+    <div class="section-title">الأبواب النحوية — Materi UAS</div>
+    <div class="chapters-grid" id="chapGrid"></div>
+    <div class="section-title" style="margin-top:8px">إعادة التعيين</div>
+    <button class="fc-btn" id="resetBtn" style="margin-bottom:32px">🗑 Hapus Semua Progress</button>
+  </div>`;
+
+  const grid = document.getElementById("chapGrid");
+  CHAPTERS.forEach(ch => {
+    const s = starsOf(ch.id);
+    const qLen = ch.quiz.length;
+    const cLen = ch.cards.length;
+    const knCh = ch.cards.filter((c,i)=>S.known[ch.id+"-"+i]).length;
+    const pct2 = Math.round(knCh/cLen*100);
+    const starHtml = [0,1,2].map(i=>`<span${i<s?' class="on"':''}></span>`).join('');
+    const div = document.createElement("button");
+    div.className = "chapter-card";
+    div.innerHTML = `
+      <div class="ch-num">Bab ${ch.id} · ${qLen} Soal</div>
+      <div class="ch-title">${esc(ch.title)}</div>
+      <div class="ch-sub">${esc(ch.sub)}</div>
+      <div class="ch-meta">
+        <span class="ch-count">${cLen} kartu · ✓${knCh}</span>
+        <span class="ch-stars">${starHtml}</span>
+      </div>
+      <div class="ch-prog"><div class="ch-prog-fill" style="width:${pct2}%"></div></div>`;
+    div.onclick = ()=>go({screen:"chapter",id:ch.id,tab:"flash"});
+    grid.appendChild(div);
+  });
+
+  document.getElementById("resetBtn").onclick = ()=>{
+    if(confirm("Yakin hapus semua progress?")){ try{localStorage.removeItem(KEY);}catch{} loadState(); go({screen:"home"}); }
+  };
+}
+
+/* ── Chapter ── */
+function renderChapter(id, tab) {
+  const ch = CHAPTERS.find(c=>c.id===id);
+  if(!ch) return go({screen:"home"});
+  const app = document.getElementById("app");
+  let main = document.getElementById("main-content");
+  if(!main){ main=document.createElement("div"); main.id="main-content"; app.appendChild(main); }
+
+  const tabs = [
+    {id:"flash",icon:"🃏",label:"Flashcard",sub:"Hafalan"},
+    {id:"quiz",icon:"🎯",label:"Kuis",sub:"10 Soal"},
+    {id:"review",icon:"📋",label:"Materi",sub:"Daftar"},
+  ];
+
+  main.innerHTML = `
+  <div class="main">
+    <div class="chapter-header">
+      <button class="back-btn" id="backBtn">← Kembali</button>
+      <div class="chapter-title-wrap">
+        <h2>${esc(ch.title)}</h2>
+        <span class="ch-badge">Bab ${ch.id} · ${esc(ch.sub)}</span>
+      </div>
+    </div>
+    <div class="tab-row">
+      ${tabs.map(t=>`<button class="tab-btn${t.id===tab?' active':''}" data-tab="${t.id}">
+        <span class="tab-icon">${t.icon}</span>${t.label}<small>${t.sub}</small>
+      </button>`).join('')}
+    </div>
+    <div class="panel" id="panel"></div>
+  </div>`;
+
+  document.getElementById("backBtn").onclick = ()=>go({screen:"home"});
+  document.querySelectorAll(".tab-btn").forEach(b=>{
+    b.onclick = ()=>go({screen:"chapter",id,tab:b.dataset.tab});
+  });
+
+  const panel = document.getElementById("panel");
+  if(tab==="flash") renderFlash(panel, ch);
+  else if(tab==="quiz") renderQuiz(panel, ch);
+  else renderReview(panel, ch);
+}
+
+/* ── Flashcard ── */
+function renderFlash(panel, ch) {
+  const deck = shuffle(ch.cards.map((c,i)=>({...c,idx:i})));
+  let pos=0, knew=0, flipped=false;
+
+  function show() {
+    if(pos>=deck.length){
+      panel.innerHTML = `
+        <div class="result-wrap">
+          <div class="result-score">${knew}/${deck.length}</div>
+          <div class="result-sub">بطاقات تمَّت مراجعتها</div>
+          <div class="result-xp">+${knew*2} XP</div>
+          <div class="result-msg">${knew===deck.length?"ممتاز! أتقنت جميع البطاقات 🎉":knew>=deck.length*.7?"جيد جداً — كرِّر ما فاتك":"راجع البطاقات مرةً أخرى"}</div>
+          <div class="result-actions">
+            <button class="r-btn primary" id="rAgain">🔁 أعِد البطاقات</button>
+            <button class="r-btn" id="rQuiz">🎯 ابدأ الكويز</button>
+          </div>
+        </div>`;
+      document.getElementById("rAgain").onclick=()=>renderFlash(panel,ch);
+      document.getElementById("rQuiz").onclick=()=>go({screen:"chapter",id:ch.id,tab:"quiz"});
+      return;
+    }
+    const e=deck[pos];
+    const isKnown = !!S.known[ch.id+"-"+e.idx];
+    panel.innerHTML = `
+      <div class="fc-wrap">
+        <div class="fc-progress">
+          <span class="fp-label">${pos+1} / ${deck.length}</span>
+          <div class="fp-bar"><div class="fp-bar-fill" style="width:${pos/deck.length*100}%"></div></div>
+          <span class="fp-label">✓ ${knew}</span>
+        </div>
+        <div class="card-scene" id="scene">
+          <div class="card-inner" id="cardInner">
+            <div class="card-face front">
+              <div class="badge">المصطلح — Istilah</div>
+              <div class="card-term">${esc(e.term)}</div>
+              <div class="card-hint">⬇ Klik kartu untuk melihat definisi</div>
+            </div>
+            <div class="card-face back">
+              <div class="badge">التعريف — Definisi</div>
+              <div class="card-def">${esc(e.def)}</div>
+              ${e.ex?`<div class="card-example">📝 ${esc(e.ex)}</div>`:''}
+            </div>
+          </div>
+        </div>
+        <div class="fc-actions" id="fcActs" style="visibility:hidden">
+          <button class="fc-btn good" id="fcGood">✓ Hafal</button>
+          <button class="fc-btn bad" id="fcBad">↺ Belum hafal</button>
+        </div>
+        <div style="text-align:center;margin-top:8px">
+          <button class="fc-btn flip" id="fcFlip">↕ Balik kartu</button>
+        </div>
+      </div>`;
+    flipped=false;
+    const inner=document.getElementById("cardInner");
+    const acts=document.getElementById("fcActs");
+    const doFlip=()=>{ flipped=!flipped; inner.classList.toggle("flipped",flipped); acts.style.visibility="visible"; };
+    inner.onclick=doFlip;
+    document.getElementById("fcFlip").onclick=doFlip;
+    document.getElementById("fcGood").onclick=()=>{
+      if(!S.known[ch.id+"-"+e.idx]){ S.known[ch.id+"-"+e.idx]=1; gainXP(2); }
+      knew++; pos++; show();
+    };
+    document.getElementById("fcBad").onclick=()=>{ deck.push(e); pos++; show(); };
+  }
+  show();
+}
+
+/* ── Quiz ── */
+function renderQuiz(panel, ch) {
+  const pool = shuffle(ch.quiz).slice(0,Math.min(10,ch.quiz.length));
+  let pos=0, right=0, combo=0, earned=0;
+
+  if(!pool.length){ panel.innerHTML='<div class="empty"><div class="em-icon">📭</div><p>Tidak ada soal untuk bab ini.</p></div>'; return; }
+
+  function ask() {
+    if(pos>=pool.length) return done();
+    const q=pool[pos];
+    const pct=pos/pool.length*100;
+    panel.innerHTML=`
+      <div class="quiz-wrap">
+        <div class="quiz-meta">
+          <div class="qm-prog"><div class="qm-fill" style="width:${pct}%"></div></div>
+          <div class="qm-score">
+            <span>${pos+1}/${pool.length}</span>
+            <span>✓${right}</span>
+            ${combo>=3?`<span class="qm-combo">🔥×${combo}</span>`:''}
+          </div>
+        </div>
+        <div class="quiz-type">Pilihan Ganda — اختيار من متعدد</div>
+        <div class="quiz-q">${esc(q.q)}</div>
+        <div class="opts" id="opts">
+          ${q.opts.map((o,i)=>`<button class="opt-btn" data-i="${i}">${esc(o)}</button>`).join('')}
+        </div>
+        <div class="quiz-fb" id="qfb"></div>
+      </div>`;
+    document.querySelectorAll(".opt-btn").forEach(b=>{
+      b.onclick=function(){
+        document.querySelectorAll(".opt-btn").forEach(x=>x.disabled=true);
+        const good=+b.dataset.i===q.ans;
+        document.querySelector(`.opt-btn[data-i="${q.ans}"]`).classList.add("correct");
+        const fb=document.getElementById("qfb");
+        if(good){
+          right++; combo++; S.maxCombo=Math.max(S.maxCombo,combo);
+          const pts=10+(combo>=3?5:0); earned+=pts; gainXP(pts);
+          b.classList.add("correct");
+          fb.className="quiz-fb ok";
+          fb.innerHTML=`✅ أحسنتَ! +${pts} XP${combo>=3?" — سلسلة 🔥":""}<br><small style="font-weight:400;color:var(--green)">${esc(q.ex)}</small>`;
+        } else {
+          combo=0; b.classList.add("wrong");
+          fb.className="quiz-fb no";
+          fb.innerHTML=`❌ الجواب: ${esc(q.opts[q.ans])}<br><small style="font-weight:400;color:var(--red)">${esc(q.ex)}</small>`;
+        }
+        setTimeout(()=>{ pos++; ask(); }, good?1200:2400);
+      };
+    });
+  }
+
+  function done() {
+    const pct=Math.round(right/pool.length*100);
+    const key=ch.id; const old=S.best[key]||0; const oldS=starsOf(key);
+    if(pct>old){ S.best[key]=pct; saveState(); }
+    const ns=starsOf(key), bonus=(ns-oldS)*25;
+    if(bonus>0) gainXP(bonus);
+    checkBadges();
+    const stars=[0,1,2].map(i=>`<span class="result-star${i<(pct>=100?3:pct>=75?2:pct>=50?1:0)?' on':''}">⭐</span>`).join('');
+    panel.innerHTML=`
+      <div class="result-wrap">
+        <div class="result-stars">${stars}</div>
+        <div class="result-score">${right}/${pool.length}</div>
+        <div class="result-sub">${pct}% Benar</div>
+        <div class="result-xp">+${earned+Math.max(0,bonus)} XP${bonus>0?" · Bintang baru! ⭐":""}</div>
+        <div class="result-msg">${pct===100?"ممتاز! حققتَ الدرجة الكاملة 🏆":pct>=75?"جيد جداً — تبقَّى خطوة صغيرة":"راجع المادة ثم حاول مرةً أخرى 📖"}</div>
+        <div class="result-actions">
+          <button class="r-btn primary" id="rAgain">↺ Coba lagi</button>
+          <button class="r-btn" id="rCard">🃏 Flashcard</button>
+          <button class="r-btn" id="rHome">🏠 Beranda</button>
+        </div>
+      </div>`;
+    document.getElementById("rAgain").onclick=()=>renderQuiz(panel,ch);
+    document.getElementById("rCard").onclick=()=>go({screen:"chapter",id:ch.id,tab:"flash"});
+    document.getElementById("rHome").onclick=()=>go({screen:"home"});
+  }
+  ask();
+}
+
+/* ── Review ── */
+function renderReview(panel, ch) {
+  panel.innerHTML=`
+    <div class="review-search"><input id="rsearch" type="search" placeholder="ابحث في المصطلحات… بحث" autocomplete="off"></div>
+    <div style="margin-bottom:14px">
+      <div class="section-title">المحاور الرئيسية — Pokok Materi</div>
+      <div class="intro-topics">${ch.topics.map(t=>`<div class="intro-topic"><span class="it-dot"></span>${esc(t)}</div>`).join('')}</div>
+    </div>
+    <div class="section-title">المصطلحات — Kosakata Istilah</div>
+    <div class="review-list" id="rlist"></div>`;
+
+  function renderList(q) {
+    const list=document.getElementById("rlist");
+    const filtered=ch.cards.filter(c=>!q||c.term.includes(q)||c.def.includes(q));
+    if(!filtered.length){ list.innerHTML='<div class="empty" style="grid-column:1/-1"><p>لا توجد نتائج.</p></div>'; return; }
+    list.innerHTML=filtered.map((c,i)=>{
+      const isK=!!S.known[ch.id+"-"+i];
+      return `<div class="review-card${isK?' known':''}">
+        <div class="rc-term">${esc(c.term)}</div>
+        <div class="rc-def">${esc(c.def)}</div>
+        ${c.ex?`<div class="rc-ex">📝 ${esc(c.ex)}</div>`:''}
+        <span class="rc-tag">Bab ${ch.id}</span>
+      </div>`;
+    }).join('');
+  }
+  renderList('');
+  document.getElementById("rsearch").oninput=function(){ renderList(this.value.trim()); };
+}
+
+/* ── Badges overlay ── */
+function openBadges() {
+  const {r,nx}=rankOf(S.xp);
+  const pct=nx?Math.round((S.xp-r[0])/(nx[0]-r[0])*100):100;
+  const box=document.getElementById("badgesBox");
+  box.innerHTML=`
+    <div class="overlay-head">
+      <h2>🏅 الأوسمة والألقاب</h2>
+      <button class="close-btn" id="closeOverlay">✕</button>
+    </div>
+    <div class="rank-strip">
+      <div>
+        <div class="rs-rank">${r[1]}</div>
+        <div class="rs-sub">${S.xp} XP${nx?` · Menuju ${nx[1]}: ${nx[0]} XP`:' — Level Tertinggi!'}</div>
+      </div>
+      <div style="flex:1;height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:0 12px">
+        <div style="height:100%;width:${pct}%;background:var(--accent);border-radius:99px;transition:width .6s"></div>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--accent)">${pct}%</div>
+    </div>
+    <div class="section-title">الأوسمة</div>
+    <div class="badges-grid">
+      ${BADGES.map(b=>`<div class="badge-item${S.badges[b.id]?' earned':''}">
+        <span class="bi-icon">${b.icon}</span>
+        <div class="bi-name">${b.name}</div>
+        <div class="bi-desc">${b.desc}</div>
+      </div>`).join('')}
+    </div>
+    <div class="section-title" style="margin-top:20px">الألقاب</div>
+    <div class="badges-grid">
+      ${RANKS.map(rk=>`<div class="badge-item${S.xp>=rk[0]?' earned':''}">
+        <span class="bi-icon">📜</span>
+        <div class="bi-name">${rk[1]}</div>
+        <div class="bi-desc">${rk[0]} XP</div>
+      </div>`).join('')}
+    </div>`;
+  document.getElementById("closeOverlay").onclick=closeBadges;
+  document.getElementById("badgesOverlay").classList.add("open");
+}
+function closeBadges() { document.getElementById("badgesOverlay").classList.remove("open"); }
+document.getElementById("badgesOverlay").onclick=function(e){ if(e.target===this) closeBadges(); };
+
+/* ── Theme ── */
+function toggleTheme() {
+  const r=document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme:dark)").matches;
+  r.dataset.theme = dark?"light":"dark";
+  try{localStorage.setItem("nahwu-theme",r.dataset.theme);}catch{}
+  renderTopbar();
+}
+try{ const t=localStorage.getItem("nahwu-theme"); if(t) document.documentElement.dataset.theme=t; }catch{}
+
+/* ── Boot ── */
+const appEl = document.getElementById("app");
+const mainDiv = document.createElement("div");
+mainDiv.id="main-content";
+appEl.appendChild(mainDiv);
+render();
+</script>
+</body>
+</html>
+
+</body></html>
